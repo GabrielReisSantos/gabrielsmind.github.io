@@ -1,0 +1,102 @@
+---
+interface Props {
+  title: string;
+  summary: string;
+  type?: string;
+  date?: string;
+  tags?: string[];
+  href: string;
+}
+
+const {
+  title,
+  summary,
+  type = "Research Note",
+  date,
+  tags = [],
+  href,
+} = Astro.props;
+---
+
+<article class="report-card">
+  <div class="report-meta">
+    <span class="report-type">{type}</span>
+    {date && <span class="report-date">{date}</span>}
+  </div>
+
+  <h3>{title}</h3>
+  <p>{summary}</p>
+
+  {tags.length > 0 && (
+    <div class="tag-row">
+      {tags.map((tag) => (
+        <span class="tag">{tag}</span>
+      ))}
+    </div>
+  )}
+
+  <a class="report-link" href={href}>Open report →</a>
+</article>
+
+<style>
+  .report-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-height: 320px;
+    padding: 1.6rem;
+    border-radius: 24px;
+    background:
+      linear-gradient(180deg, rgba(20, 28, 52, 0.86), rgba(11, 18, 36, 0.96));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.24);
+    transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+  }
+
+  .report-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(94, 234, 212, 0.24);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+  }
+
+  .report-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .report-type {
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .report-date {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.28rem;
+    line-height: 1.15;
+  }
+
+  p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .report-link {
+    margin-top: auto;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .report-link:hover {
+    color: var(--accent);
+  }
+</style>

@@ -1,0 +1,66 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const reports = await getCollection("reports");
+
+  return reports.map((report) => ({
+    params: { slug: report.id },
+    props: { report },
+  }));
+}
+
+const { report } = Astro.props;
+const { Content } = await render(report);
+---
+
+<BaseLayout
+  title={`${report.data.title} | GabrielsMind`}
+  description={report.data.summary}
+>
+  <section class="report-page-hero section">
+    <p class="eyebrow">{report.data.type}</p>
+    <h1 class="section-title">{report.data.title}</h1>
+    <p class="lead">{report.data.summary}</p>
+
+    <div class="tag-row">
+      <span class="tag">{report.data.date}</span>
+      {report.data.tags.map((tag) => (
+        <span class="tag">{tag}</span>
+      ))}
+    </div>
+  </section>
+
+  <section class="report-body section">
+    <article class="markdown-shell">
+      <Content />
+    </article>
+  </section>
+
+  <style>
+    .markdown-shell {
+      max-width: 800px;
+      padding: 2rem;
+      border-radius: 24px;
+      background: rgba(8, 14, 28, 0.42);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.24);
+    }
+
+    .markdown-shell :global(h2) {
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+      font-size: 1.6rem;
+    }
+
+    .markdown-shell :global(p),
+    .markdown-shell :global(li) {
+      color: var(--muted);
+    }
+
+    .markdown-shell :global(ul) {
+      padding-left: 1.25rem;
+    }
+  </style>
+</BaseLayout>

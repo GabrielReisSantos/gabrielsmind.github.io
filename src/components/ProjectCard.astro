@@ -1,0 +1,85 @@
+---
+interface Props {
+  title: string;
+  text: string;
+  tags?: string[];
+  href?: string;
+}
+
+const { title, text, tags = [], href } = Astro.props;
+---
+
+<article class="project-card">
+  <div class="project-top">
+    <span class="project-kicker">Featured Project</span>
+    <h3>{title}</h3>
+    <p>{text}</p>
+  </div>
+
+  {tags.length > 0 && (
+    <div class="tag-row">
+      {tags.map((tag) => (
+        <span class="tag">{tag}</span>
+      ))}
+    </div>
+  )}
+
+  {href && <a class="project-link" href={href}>Explore project →</a>}
+</article>
+
+<style>
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 280px;
+    padding: 1.5rem;
+    border-radius: 24px;
+    background:
+      linear-gradient(180deg, rgba(20, 28, 52, 0.88), rgba(11, 18, 36, 0.96));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.24);
+    transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+  }
+
+  .project-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(94, 234, 212, 0.24);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+  }
+
+  .project-kicker {
+    display: inline-flex;
+    margin-bottom: 0.9rem;
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  h3 {
+    margin: 0 0 0.85rem;
+    font-size: 1.28rem;
+    line-height: 1.15;
+  }
+
+  p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.25rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .project-link:hover {
+    color: var(--accent);
+  }
+</style>

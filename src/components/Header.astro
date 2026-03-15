@@ -1,0 +1,98 @@
+---
+const links = [
+  { href: "/about/", label: "About" },
+  { href: "/projects/", label: "Projects" },
+  { href: "/reports/", label: "Write-ups & Research" },
+  { href: "/certifications/", label: "Certifications" },
+  { href: "/blog/", label: "Blog" },
+  { href: "/contact/", label: "Contact" },
+];
+---
+
+<header class="site-header">
+  <div class="container">
+    <nav class="nav-shell">
+      <a class="brand" href="/">GabrielsMind</a>
+
+      <div class="nav-links">
+        {links.map((link) => (
+          <a href={link.href}>{link.label}</a>
+        ))}
+      </div>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 1rem 0;
+    pointer-events: none;
+  }
+
+  .nav-shell {
+    min-height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0 1rem;
+    border-radius: 18px;
+    background: rgba(7, 12, 24, 0.42);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+    pointer-events: auto;
+  }
+
+  .brand {
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    color: var(--text);
+  }
+
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    font-weight: 600;
+    padding: 0.65rem 0.9rem;
+    border-radius: 999px;
+    transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+  }
+
+  .nav-links a:hover {
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 720px) {
+    .site-header {
+      padding: 0.75rem 0;
+    }
+
+    .nav-shell {
+      align-items: flex-start;
+      flex-direction: column;
+      padding: 0.85rem 1rem;
+    }
+
+    .nav-links {
+      gap: 0.2rem;
+    }
+
+    .nav-links a {
+      padding: 0.55rem 0.75rem;
+    }
+  }
+</style>

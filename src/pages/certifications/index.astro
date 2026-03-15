@@ -1,0 +1,194 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+import SectionIntro from "../../components/SectionIntro.astro";
+import CertificationCard from "../../components/CertificationCard.astro";
+
+const certifications = [
+  {
+    title: "CCNA",
+    issuer: "Cisco",
+    status: "Completed",
+    year: "2025",
+    summary:
+      "Core networking certification covering routing, switching, IP services, security fundamentals, and operational troubleshooting.",
+    skills: ["Networking", "Routing", "Switching", "Troubleshooting"],
+    href: "https://www.credly.com/badges/fabf850f-cc6f-4eb7-b2bd-101328e81314",
+  },
+  {
+  title: "Fortinet Certified Associate in Cybersecurity",
+  issuer: "Fortinet",
+  status: "Completed",
+  year: "2025",
+  credentialId: "54213480186S",
+  summary:
+    "Foundational certification focused on core cybersecurity concepts, threat awareness, security operations context, and practical defensive understanding.",
+  skills: ["Cybersecurity Fundamentals", "Threat Awareness", "Security Operations", "Defensive Thinking"],
+  href: "https://training.fortinet.com/admin/tool/certificate/index.php",
+  },
+  {
+  title: "HTB Pro Labs - Dante",
+  issuer: "Hack The Box",
+  status: "Completed",
+  year: "Mar 2026",
+  credentialId: "HTBCERT-1B9BEB9C29",
+  summary:
+    "Hands-on offensive security lab focused on realistic enterprise-style attack paths, privilege escalation, enumeration discipline, and practical exploitation in a controlled lab environment.",
+  skills: ["Enumeration", "Privilege Escalation", "Internal Network", "Offensive Security", "Active Directory"],
+  },
+  {
+    title: "OSCP",
+    issuer: "OffSec",
+    status: "In Progress",
+    year: "2026 target",
+    summary:
+      "Practical offensive security training focused on enumeration, exploitation, privilege escalation, and disciplined reporting.",
+    skills: ["Enumeration", "Privilege Escalation", "Web", "AD"],
+    href: "#",
+  },
+  {
+    title: "GIAC GRID",
+    issuer: "GIAC",
+    status: "Planned",
+    year: "2027 target",
+    summary:
+      "Industrial cybersecurity track aligned with defending OT and ICS environments through practical technical understanding.",
+    skills: ["ICS", "OT Security", "Industrial Defense", "Risk"],
+    href: "#",
+  },
+];
+---
+
+<BaseLayout
+  title="Certifications | GabrielsMind"
+  description="Certifications, exam roadmap, and structured professional development at GabrielsMind."
+>
+  <Hero
+    eyebrow="Certifications · Skills · Roadmap"
+    text="This page tracks the certifications that matter to my direction: networking, offensive security, SOC work, and eventually industrial cybersecurity."
+    primaryHref="/projects/"
+    primaryLabel="See Projects"
+    secondaryHref="/reports/"
+    secondaryLabel="Read Research"
+    imageSrc="/images/about-reflection.jpg"
+    imageAlt="Gabriel working with a laptop in an urban setting"
+  />
+
+  <section class="intro-strip">
+    <div class="container intro-strip-inner">
+      <div>
+        <span class="intro-label">How to read this page</span>
+        <p>Each certification listed here supports a specific technical direction.</p>
+      </div>
+      <div>
+        <span class="intro-label">What matters most</span>
+        <p>Projects, labs, and execution still matter more than badges. Certifications are part of the proof, not the whole proof.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <SectionIntro
+      eyebrow="Current certifications"
+      text="The roadmap below reflects what I’m building technically and where I’m heading next."
+    />
+
+    <div class="grid grid-3">
+      {certifications.map((cert) => (
+        <CertificationCard {...cert} />
+      ))}
+    </div>
+  </section>
+
+  <section class="section roadmap-section">
+    <div class="roadmap-grid">
+      <div>
+        <p class="eyebrow">Roadmap</p>
+        <h2 class="section-title">Where this is going</h2>
+        <p class="lead">
+          My certification path follows the work: networking first, then offensive depth, then stronger specialization in defense and industrial environments.
+        </p>
+      </div>
+
+      <div class="roadmap-card">
+        <ol>
+          <li><strong>CCNA</strong> — solid networking foundation</li>
+          <li><strong>OSCP</strong> — practical offensive discipline</li>
+          <li><strong>Advanced SOC / Detection Growth</strong> — deeper operational security work</li>
+          <li><strong>GIAC GRID</strong> — industrial and OT defense specialization</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .intro-strip {
+      position: relative;
+      margin-top: -2rem;
+      z-index: 3;
+    }
+
+    .intro-strip-inner {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      padding: 1rem;
+      border-radius: 22px;
+      background: rgba(8, 14, 28, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.24);
+    }
+
+    .intro-label {
+      display: inline-block;
+      margin-bottom: 0.45rem;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .intro-strip p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .roadmap-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .roadmap-card {
+      padding: 1.5rem;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(20, 28, 52, 0.82), rgba(11, 18, 36, 0.95));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.24);
+    }
+
+    .roadmap-card ol {
+      margin: 0;
+      padding-left: 1.25rem;
+      color: var(--muted);
+    }
+
+    .roadmap-card li + li {
+      margin-top: 0.8rem;
+    }
+
+    @media (max-width: 900px) {
+      .intro-strip-inner,
+      .roadmap-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .intro-strip {
+        margin-top: -1rem;
+      }
+    }
+  </style>
+</BaseLayout>

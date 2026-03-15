@@ -1,0 +1,218 @@
+---
+interface Props {
+  title: string;
+  issuer: string;
+  status?: string;
+  year?: string;
+  summary: string;
+  skills?: string[];
+  href?: string;
+  credentialId?: string;
+}
+
+const {
+  title,
+  issuer,
+  status = "Completed",
+  year,
+  summary,
+  skills = [],
+  href,
+  credentialId,
+} = Astro.props;
+
+const normalizedStatus = status.toLowerCase();
+
+const statusClass =
+  normalizedStatus === "completed"
+    ? "completed"
+    : normalizedStatus === "in progress"
+      ? "in-progress"
+      : normalizedStatus === "planned"
+        ? "planned"
+        : "default";
+
+const hasCredentialLink = !!href && href !== "#";
+---
+
+<article class={`cert-card ${statusClass}`}>
+  <div class="cert-top">
+    <div>
+      <span class={`cert-status ${statusClass}`}>{status}</span>
+      <h3>{title}</h3>
+      <p class="issuer">{issuer}</p>
+    </div>
+
+    {year && <span class="cert-year">{year}</span>}
+  </div>
+
+  <p class="summary">{summary}</p>
+
+  {credentialId && (
+    <p class="credential-id">
+      <strong>Credential ID:</strong> {credentialId}
+    </p>
+  )}
+
+  {skills.length > 0 && (
+    <div class="tag-row">
+      {skills.map((skill) => (
+        <span class="tag">{skill}</span>
+      ))}
+    </div>
+  )}
+
+  {hasCredentialLink ? (
+    <a class="cert-link" href={href} target="_blank" rel="noopener noreferrer">
+      View credential →
+    </a>
+  ) : (
+    <p class="cert-note">Verification available on request.</p>
+  )}
+</article>
+
+<style>
+  .cert-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-height: 300px;
+    padding: 1.5rem;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background:
+      linear-gradient(180deg, rgba(20, 28, 52, 0.88), rgba(11, 18, 36, 0.96));
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.24);
+    transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+    overflow: hidden;
+  }
+
+  .cert-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 4px;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .cert-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+  }
+
+  .cert-card.completed::before {
+    background: linear-gradient(180deg, #34d399, #10b981);
+  }
+
+  .cert-card.in-progress::before {
+    background: linear-gradient(180deg, #60a5fa, #3b82f6);
+  }
+
+  .cert-card.planned::before {
+    background: linear-gradient(180deg, #f59e0b, #f97316);
+  }
+
+  .cert-card.completed:hover {
+    border-color: rgba(52, 211, 153, 0.3);
+  }
+
+  .cert-card.in-progress:hover {
+    border-color: rgba(96, 165, 250, 0.3);
+  }
+
+  .cert-card.planned:hover {
+    border-color: rgba(245, 158, 11, 0.3);
+  }
+
+  .cert-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .cert-status {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 0.85rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.76rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .cert-status.completed {
+    color: #6ee7b7;
+    background: rgba(16, 185, 129, 0.12);
+    border-color: rgba(16, 185, 129, 0.22);
+  }
+
+  .cert-status.in-progress {
+    color: #93c5fd;
+    background: rgba(59, 130, 246, 0.12);
+    border-color: rgba(59, 130, 246, 0.22);
+  }
+
+  .cert-status.planned {
+    color: #fbbf24;
+    background: rgba(245, 158, 11, 0.12);
+    border-color: rgba(245, 158, 11, 0.22);
+  }
+
+  .cert-status.default {
+    color: var(--accent);
+  }
+
+  h3 {
+    margin: 0 0 0.45rem;
+    font-size: 1.3rem;
+    line-height: 1.12;
+  }
+
+  .issuer {
+    margin: 0;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .cert-year {
+    color: var(--muted);
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
+
+  .summary {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .credential-id {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.92rem;
+    word-break: break-word;
+  }
+
+  .cert-link {
+    margin-top: auto;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .cert-link:hover {
+    color: var(--accent);
+  }
+
+  .cert-note {
+    margin-top: auto;
+    margin-bottom: 0;
+    color: var(--muted);
+    font-size: 0.92rem;
+    font-style: italic;
+  }
+</style>

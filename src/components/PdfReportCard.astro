@@ -1,0 +1,142 @@
+---
+interface Props {
+  title: string;
+  summary: string;
+  pdf: string;
+  cover: string;
+  type?: string;
+  year?: string;
+  tags?: string[];
+}
+
+const {
+  title,
+  summary,
+  pdf,
+  cover,
+  type = "Report",
+  year,
+  tags = [],
+} = Astro.props;
+---
+
+<article class="pdf-card">
+  <a class="pdf-cover-link" href={pdf} target="_blank" rel="noopener noreferrer">
+    <img class="pdf-cover" src={cover} alt={`${title} cover`} />
+  </a>
+
+  <div class="pdf-body">
+    <div class="pdf-meta">
+      <span class="pdf-type">{type}</span>
+      {year && <span class="pdf-year">{year}</span>}
+    </div>
+
+    <h3>{title}</h3>
+    <p>{summary}</p>
+
+    {tags.length > 0 && (
+      <div class="tag-row">
+        {tags.map((tag) => (
+          <span class="tag">{tag}</span>
+        ))}
+      </div>
+    )}
+
+    <div class="pdf-actions">
+      <a class="button primary" href={pdf} target="_blank" rel="noopener noreferrer">
+        Open PDF
+      </a>
+      <a class="button secondary" href={pdf} download>
+        Download
+      </a>
+    </div>
+  </div>
+</article>
+
+<style>
+  .pdf-card {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 1.25rem;
+    align-items: stretch;
+    padding: 1.25rem;
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(20, 28, 52, 0.86), rgba(11, 18, 36, 0.96));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.24);
+    transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+  }
+
+  .pdf-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(94, 234, 212, 0.24);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+  }
+
+  .pdf-cover-link {
+    display: block;
+  }
+
+  .pdf-cover {
+    width: 100%;
+    aspect-ratio: 3 / 4.1;
+    object-fit: cover;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .pdf-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .pdf-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .pdf-type {
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .pdf-year {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.35rem;
+    line-height: 1.15;
+  }
+
+  p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .pdf-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: auto;
+  }
+
+  @media (max-width: 820px) {
+    .pdf-card {
+      grid-template-columns: 1fr;
+    }
+
+    .pdf-cover {
+      max-width: 260px;
+    }
+  }
+</style>

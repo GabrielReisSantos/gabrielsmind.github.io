@@ -1,0 +1,25 @@
+---
+interface Props {
+  title: string;
+  text: string;
+}
+
+const { title, text } = Astro.props;
+---
+
+<article class="card feature-card">
+  <h3>{title}</h3>
+  <p class="muted">{text}</p>
+</article>
+
+<style>
+  .feature-card h3 {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    font-size: 1.15rem;
+  }
+
+  .feature-card p {
+    margin: 0;
+  }
+</style>

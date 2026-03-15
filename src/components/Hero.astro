@@ -1,0 +1,187 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  text: string;
+  primaryHref?: string;
+  primaryLabel?: string;
+  secondaryHref?: string;
+  secondaryLabel?: string;
+  imageSrc?: string;
+  imageAlt?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  text,
+  primaryHref,
+  primaryLabel,
+  secondaryHref,
+  secondaryLabel,
+  imageSrc,
+  imageAlt = "GabrielsMind visual",
+} = Astro.props;
+---
+
+<section class="hero-shell">
+  <div class="hero-bg">
+    {imageSrc && <img src={imageSrc} alt={imageAlt} />}
+    <div class="hero-gradient hero-gradient-a"></div>
+    <div class="hero-gradient hero-gradient-b"></div>
+    <div class="hero-overlay"></div>
+  </div>
+
+  <div class="hero-content container">
+    <div class="hero-panel">
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <h1>{title}</h1>
+      <p class="lead">{text}</p>
+
+      <div class="button-row">
+        {primaryHref && primaryLabel && (
+          <a class="button primary" href={primaryHref}>{primaryLabel}</a>
+        )}
+        {secondaryHref && secondaryLabel && (
+          <a class="button secondary" href={secondaryHref}>{secondaryLabel}</a>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-shell {
+    position: relative;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    min-height: 92vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .hero-bg img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 42%;
+    filter: saturate(0.82) contrast(1.04) brightness(0.54);
+    transform: scale(1.03);
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        90deg,
+        rgba(5, 10, 22, 0.72) 0%,
+        rgba(5, 10, 22, 0.40) 42%,
+        rgba(5, 10, 22, 0.62) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(4, 8, 18, 0.18) 0%,
+        rgba(4, 8, 18, 0.54) 100%
+      );
+  }
+
+  .hero-gradient {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(90px);
+    opacity: 0.42;
+    pointer-events: none;
+  }
+
+  .hero-gradient-a {
+    width: 38rem;
+    height: 38rem;
+    left: -8rem;
+    top: 8%;
+    background: rgba(0, 190, 255, 0.22);
+  }
+
+  .hero-gradient-b {
+    width: 34rem;
+    height: 34rem;
+    right: -8rem;
+    top: 12%;
+    background: rgba(98, 70, 255, 0.18);
+  }
+
+  .hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding-left: clamp(1.25rem, 4vw, 4rem);
+  }
+
+  .hero-panel {
+    max-width: 760px;
+    padding: 2rem 0;
+    background: transparent;
+    border: 0;
+    backdrop-filter: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  h1 {
+    font-size: clamp(2.8rem, 6vw, 5.2rem);
+    line-height: 0.98;
+    margin: 0 0 1rem;
+    max-width: 700px;
+    letter-spacing: -0.04em;
+    text-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  .lead {
+    max-width: 650px;
+    color: rgba(236, 242, 255, 0.82);
+    text-shadow: 0 4px 18px rgba(0, 0, 0, 0.28);
+  }
+
+  @media (max-width: 980px) {
+    .hero-shell {
+      min-height: 82vh;
+    }
+
+    .hero-panel {
+      padding: 1.5rem 0;
+    }
+
+    .hero-bg img {
+      object-position: center center;
+    }
+  }
+
+  @media (max-width: 640px) {
+  .hero-shell {
+    min-height: auto;
+    padding: 6rem 0 4rem;
+  }
+
+  h1 {
+    font-size: clamp(2.3rem, 10vw, 3.6rem);
+  }
+
+  .hero-panel {
+    padding: 1rem 0;
+  }
+
+  .hero-content {
+    padding-left: 0.5rem;
+   }
+  }
+</style>

@@ -1,0 +1,148 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+import SectionIntro from "../../components/SectionIntro.astro";
+import PdfReportCard from "../../components/PdfReportCard.astro";
+
+const reports = [
+  {
+    title: "APT34 Cybersecurity Report",
+    summary: "Threat-focused report covering the APT34 actor profile, patterns, and security implications.",
+    type: "Threat Report",
+    year: "2026",
+    pdf: "/reports/apt34-report.pdf",
+    cover: "/reports/covers/apt34.png",
+    tags: ["APT34", "Threat Intel", "Adversary"],
+  },
+  {
+    title: "Pitch Deck",
+    summary: "Presentation material summarizing the concept, value, and communication direction of the project.",
+    type: "Presentation",
+    year: "2026",
+    pdf: "/reports/pitch.pdf",
+    cover: "/reports/covers/pitch.png",
+    tags: ["Pitch", "Strategy", "Presentation"],
+  },
+  {
+    title: "Presentation 3",
+    summary: "Technical presentation focused on project communication and structured reporting.",
+    type: "Presentation",
+    year: "2026",
+    pdf: "/reports/presentation3.pdf",
+    cover: "/reports/covers/presentation3.png",
+    tags: ["Slides", "Technical", "Presentation"],
+  },
+  {
+    title: "Presentation 4",
+    summary: "Additional presentation material for research and project storytelling.",
+    type: "Presentation",
+    year: "2026",
+    pdf: "/reports/presentation4.pdf",
+    cover: "/reports/covers/presentation4.png",
+    tags: ["Slides", "Research", "Presentation"],
+  },
+  {
+    title: "ANZ Report",
+    summary: "Formal report document prepared for structured review and delivery.",
+    type: "Report",
+    year: "2026",
+    pdf: "/reports/report-anz.pdf",
+    cover: "/reports/covers/report-anz.png",
+    tags: ["Report", "Formal", "Research"],
+  },
+];
+---
+
+<BaseLayout
+  title="Write-ups & Research | GabrielsMind"
+  description="Public reports, research, and downloadable PDF documents from GabrielsMind."
+>
+  <Hero
+    eyebrow="Write-ups · Research · Presentations · Reports"
+    title="A curated library of research, reports, and project presentations."
+    text="This section is built for documents that deserve structure: PDFs, formal write-ups, threat notes, and presentation material that can be opened, reviewed, and downloaded directly."
+    primaryHref="/projects/"
+    primaryLabel="See Projects"
+    secondaryHref="/contact/"
+    secondaryLabel="Contact Me"
+    imageSrc="/images/about-reflection.jpg"
+    imageAlt="Gabriel working with a laptop in an urban setting"
+  />
+
+  <section class="intro-strip">
+    <div class="container intro-strip-inner">
+      <div>
+        <span class="intro-label">What this section is</span>
+        <p>A clean document library for reports, research notes, threat briefings, and presentations.</p>
+      </div>
+      <div>
+        <span class="intro-label">How to use it</span>
+        <p>Open PDFs directly in the browser, review covers at a glance, and download what matters.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <SectionIntro
+      eyebrow="Document library"
+      title="Reports and research"
+      text="These are not blog posts. They are formatted deliverables."
+    />
+
+    <div class="reports-grid">
+      {reports.map((report) => (
+        <PdfReportCard {...report} />
+      ))}
+    </div>
+  </section>
+
+  <style>
+    .intro-strip {
+      position: relative;
+      margin-top: -2rem;
+      z-index: 3;
+    }
+
+    .intro-strip-inner {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      padding: 1rem;
+      border-radius: 22px;
+      background: rgba(8, 14, 28, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.24);
+    }
+
+    .intro-label {
+      display: inline-block;
+      margin-bottom: 0.45rem;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .intro-strip p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .reports-grid {
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 900px) {
+      .intro-strip-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .intro-strip {
+        margin-top: -1rem;
+      }
+    }
+  </style>
+</BaseLayout>
