@@ -139,27 +139,27 @@ Stay curious. Stay secure."
           <a class="button secondary" href="/blog/">Visit Blog</a>
         </div>
       </div>
-  </section>
-  <section class="section closing-section">
-    <div class="closing-grid">
-      <div>
-        <p class="eyebrow">Next step</p>
-        <h2 class="section-title">If you want to understand the work, start with the cluster project or the reports library.</h2>
-      </div>
+<section class="live-map section">
+  <div class="container">
+    <p class="section-eyebrow">Live activity</p>
+    <h2 class="section-title">Global threat telemetry</h2>
+    <p class="section-lead">
+      External live widget showing real-time cyber threat activity.
+    </p>
 
-      <div class="closing-card">
-        <p>
-          This site is meant to show how I build, think, and document — not just what tools I have touched.
-        </p>
-
-        <div class="button-row">
-          <a class="button primary" href="/projects/">See Projects</a>
-          <a class="button secondary" href="/contact/">Contact Me</a>
-        </div>
-      </div>
+    <div class="live-map-frame">
+      <iframe
+        src="https://cybermap.kaspersky.com/en/widget/dynamic/dark"
+        width="100%"
+        height="344"
+        frameborder="0"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Cyberthreat Live Map"
+      ></iframe>
     </div>
-  </section>
-
+  </div>
+</section>
   <style>
 .intro-strip {
   position: relative;
@@ -237,7 +237,24 @@ Stay curious. Stay secure."
   font-size: 0.98rem;
   font-weight: 600;
 }
+.live-map {
+  padding: 5rem 0;
+}
 
+.live-map-frame {
+  margin-top: 1.5rem;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(8, 14, 28, 0.72);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.24);
+}
+
+.live-map-frame iframe {
+  display: block;
+  width: 100%;
+  min-height: 344px;
+}
 @media (max-width: 1100px) {
   .intro-links-4 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
