@@ -4,152 +4,180 @@ import Hero from "../components/Hero.astro";
 import SectionIntro from "../components/SectionIntro.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 
-const featuredProjects = [
+const flagshipProjects = [
   {
     title: "Proxmox Cluster Security Lab",
-    text: "A segmented multi-node lab environment built to support SOC workflows, hostile-zone testing, malware research isolation, and realistic blue-team / red-team experimentation.",
-    tags: ["Proxmox", "OPNsense", "Segmentation", "SOC Lab"],
+    text: "A segmented multi-node security lab built to support SOC workflows, hostile-zone testing, malware research isolation, and controlled adversary simulation.",
+    tags: ["Proxmox", "OPNsense", "Segmentation", "Infrastructure"],
     href: "/projects/proxmox-cluster-security-lab/",
+    linkLabel: "Read project →",
   },
   {
-    title: "SOC Lab Automation",
-    text: "Detection, enrichment, case handling, and response workflows built around Wazuh, TheHive, Shuffle, and operational triage logic.",
-    tags: ["Wazuh", "TheHive", "Shuffle", "Detection Engineering"],
-    href: "/projects/",
+    title: "GabrielsMind Enterprise Defense",
+    text: "A public project focused on practical enterprise defense thinking, security architecture, and hands-on defensive workflows built to connect technical controls with real operational use.",
+    tags: ["Enterprise Defense", "Security Architecture", "Blue Team"],
+    href: "https://github.com/GabrielReisSantos/gabrielsmind_enterprise_defense",
+    linkLabel: "View repository →",
   },
   {
-    title: "Phishing Triage Platform",
-    text: "A system for analyzing suspicious emails, domains, and IPs with structured scoring, enrichment, and investigation support.",
-    tags: ["Phishing", "Threat Intel", "Automation"],
-    href: "/projects/",
+    title: "My Home SOC Lab",
+    text: "A home SOC lab project built to explore monitoring, detection, logging, and investigation workflows in a practical environment designed for learning by doing.",
+    tags: ["SOC Lab", "Detection", "Monitoring", "Investigation"],
+    href: "https://github.com/GabrielReisSantos/MyhomeSOClab",
+    linkLabel: "View repository →",
   },
 ];
 ---
 
 <BaseLayout
   title="Projects | GabrielsMind"
-  description="Selected cybersecurity projects, labs, and engineered security work from GabrielsMind."
+  description="Projects focused on labs, architecture, security engineering, and technical documentation."
 >
   <Hero
     eyebrow="Projects · Labs · Architecture · Security Engineering"
-    title="Projects built to demonstrate real technical judgment."
+    title="My public projects"
     text="This section focuses on practical security projects: labs, workflows, architectures, and systems that show how I design, test, and think through technical problems."
     primaryHref="/reports/"
     primaryLabel="Read Research"
     secondaryHref="/contact/"
     secondaryLabel="Contact Me"
-    imageSrc="/images/hero-escalator.jpg"
-    imageAlt="Gabriel in a cinematic urban environment"
+    imageSrc="/images/extra-dark.jpg"
+    imageAlt="Gabriel working on a laptop in an urban environment"
   />
 
   <section class="intro-strip">
     <div class="container intro-strip-inner">
-      <div>
+      <div class="intro-strip-card">
         <span class="intro-label">What belongs here</span>
         <p>Projects with clear objectives, design choices, and useful technical outcomes.</p>
       </div>
-      <div>
+
+      <div class="intro-strip-card">
         <span class="intro-label">What does not</span>
-        <p>Screenshot dumps, vague lab bragging, and “I installed a tool” writeups with no engineering logic.</p>
+        <p>Tool-driven write-ups with no real engineering logic.</p>
       </div>
     </div>
   </section>
 
   <section class="section">
     <SectionIntro
-      eyebrow="Featured projects"
-      title="Selected engineered work"
-      text="These are the projects that best represent how I build, structure, and explain technical systems."
+      eyebrow="My work"
+      title="Projects that show engineering judgment"
+      text="These are the public projects that best reflect how I think through systems, trust boundaries, infrastructure decisions, and technical documentation."
     />
 
     <div class="grid grid-3">
-      {featuredProjects.map((project) => (
+      {flagshipProjects.map((project) => (
         <ProjectCard {...project} />
       ))}
     </div>
   </section>
 
-  <section class="section closing-section">
-    <div class="closing-grid">
-      <div>
-        <p class="eyebrow">What matters most</p>
-        <h2 class="section-title">A project is only strong if you can defend the decisions behind it.</h2>
+  <section class="section research-section">
+    <div class="research-panel">
+      <div class="research-copy">
+        <p class="eyebrow">Documents</p>
+        <h2 class="section-title">Research & reports</h2>
         <p class="lead">
-          Good technical work is not just about tools. It is about architecture, tradeoffs, security boundaries, and the ability to explain why the system was built that way.
+          This section brings together reports, write-ups, and presentation material that are meant to be read as structured deliverables.
         </p>
-      </div>
 
-      <div class="closing-card">
-        <p>
-          The Proxmox cluster project is the clearest example of that approach: infrastructure built with security purpose, segmentation, and operational realism in mind.
-        </p>
+        <div class="button-row">
+          <a class="button primary" href="/reports/">Open Reports Library</a>
+          <a class="button secondary" href="https://medium.com/@gabrielreissantos" target="_blank" rel="noopener noreferrer">Visit Blog</a>
+        </div>
       </div>
     </div>
   </section>
-
-  <style>
-    .intro-strip {
-      position: relative;
-      margin-top: -2rem;
-      z-index: 3;
-    }
-
-    .intro-strip-inner {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem;
-      padding: 1rem;
-      border-radius: 22px;
-      background: rgba(8, 14, 28, 0.62);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(14px);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.24);
-    }
-
-    .intro-label {
-      display: inline-block;
-      margin-bottom: 0.45rem;
-      color: var(--accent);
-      font-size: 0.78rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .intro-strip p {
-      margin: 0;
-      color: var(--muted);
-    }
-
-    .closing-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 1.5rem;
-      align-items: start;
-    }
-
-    .closing-card {
-      padding: 1.5rem;
-      border-radius: 24px;
-      background: linear-gradient(180deg, rgba(20, 28, 52, 0.82), rgba(11, 18, 36, 0.95));
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.24);
-    }
-
-    .closing-card p {
-      margin-top: 0;
-      color: var(--muted);
-    }
-
-    @media (max-width: 900px) {
-      .intro-strip-inner,
-      .closing-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .intro-strip {
-        margin-top: -1rem;
-      }
-    }
-  </style>
 </BaseLayout>
+
+<style>
+  .intro-strip {
+    position: relative;
+    margin-top: -2rem;
+    z-index: 3;
+  }
+
+  .intro-strip-inner {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    padding: 0;
+    border-radius: 22px;
+    overflow: hidden;
+    background: rgba(8, 14, 28, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.24);
+  }
+
+  .intro-strip-card {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .intro-strip-card + .intro-strip-card {
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .intro-label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    color: var(--accent);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .intro-strip-card p {
+    margin: 0;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .research-panel {
+    border-radius: 24px;
+    padding: 2rem;
+    background: rgba(8, 14, 28, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.24);
+  }
+
+  .research-copy {
+    max-width: 760px;
+  }
+
+  .button-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+
+  .live-map-frame {
+    margin-top: 1.5rem;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(8, 14, 28, 0.72);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.24);
+  }
+
+  .live-map-frame iframe {
+    display: block;
+    width: 100%;
+    min-height: 344px;
+  }
+
+  @media (max-width: 900px) {
+    .intro-strip-inner {
+      grid-template-columns: 1fr;
+    }
+
+    .intro-strip-card + .intro-strip-card {
+      border-left: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+  }
+</style>
