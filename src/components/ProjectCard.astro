@@ -4,9 +4,10 @@ interface Props {
   text: string;
   tags?: string[];
   href?: string;
+  linkLabel?: string;
 }
 
-const { title, text, tags = [], href } = Astro.props;
+const { title, text, tags = [], href, linkLabel = "Explore project →" } = Astro.props;
 ---
 
 <article class="project-card">
@@ -24,7 +25,7 @@ const { title, text, tags = [], href } = Astro.props;
     </div>
   )}
 
-  {href && <a class="project-link" href={href}>Explore project →</a>}
+   {href && <a class="project-link" href={href}>{linkLabel}</a>}
 </article>
 
 <style>

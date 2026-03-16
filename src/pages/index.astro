@@ -10,9 +10,11 @@ import ProjectCard from "../components/ProjectCard.astro";
   description="Cybersecurity portfolio, labs, research, and engineered security work by Gabriel."
 >
   <Hero
-    eyebrow="Cybersecurity · Labs · Detection · Infrastructure"
-    title="Building practical security systems that turn technical risk into business value."
-    text="I build security labs, segmented infrastructure, detection workflows, and research-driven projects that show real engineering judgment — not just tool installation."
+    eyebrow="Research · Labs · Infrastructure · Experimentation"
+    title="Who am I?"
+    text="I am a junior cybersecurity analyst, focused on security operations, detection, and incident investigation.
+This portfolio documents how I think, how I investigate, and how I translate security events into operational decisions.
+Stay curious. Stay secure."
     primaryHref="/projects/"
     primaryLabel="See Projects"
     secondaryHref="/reports/"
@@ -58,7 +60,7 @@ import ProjectCard from "../components/ProjectCard.astro";
 
     <a
       class="intro-link-card"
-      href="https://github.com/your-github"
+      href="https://github.com/GabrielReisSantos"
       target="_blank"
       rel="noopener noreferrer"
       aria-label="GitHub profile"
@@ -74,7 +76,7 @@ import ProjectCard from "../components/ProjectCard.astro";
 
     <a
       class="intro-link-card"
-      href="https://medium.com/@your-medium"
+      href="https://medium.com/@gabrielreissantos"
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Medium profile"
@@ -91,40 +93,45 @@ import ProjectCard from "../components/ProjectCard.astro";
 </section>
   <section class="section">
     <SectionIntro
-      eyebrow="Flagship work"
-      title="Projects that carry real technical weight"
-      text="These are the projects that best represent how I design systems, think through security boundaries, and document technical decisions."
+      eyebrow="My public projects"
+      title="Projects that show engineering judgment"
+      text="These are the projects that best represent how I think through architecture, trust boundaries, operational tradeoffs, and technical documentation."
     />
 
     <div class="grid grid-3">
-      <ProjectCard
-        title="Proxmox Cluster Security Lab"
-        text="A segmented multi-node security lab built to support SOC workflows, hostile-zone testing, malware research isolation, and controlled adversary simulation."
-        tags={["Proxmox", "OPNsense", "Segmentation", "Infrastructure"]}
-        href="/projects/proxmox-cluster-security-lab/"
-      />
-      <ProjectCard
-        title="SOC Lab Automation"
-        text="Detection, enrichment, case handling, and response workflows built around Wazuh, TheHive, Shuffle, and practical triage logic."
-        tags={["Wazuh", "TheHive", "Shuffle", "Detection Engineering"]}
-        href="/projects/"
-      />
-      <ProjectCard
-        title="Phishing Triage Platform"
-        text="A structured system for analyzing suspicious emails, domains, and IPs with scoring, enrichment, and investigation support."
-        tags={["Phishing", "Threat Intel", "Automation"]}
-        href="/projects/"
-      />
+<ProjectCard
+  title="Proxmox Cluster Security Lab"
+  text="A segmented multi-node security lab built to support SOC workflows, hostile-zone testing, malware research isolation, and controlled adversary simulation."
+  tags={["Proxmox", "OPNsense", "Segmentation", "Infrastructure"]}
+  href="/projects/proxmox-cluster-security-lab/"
+  linkLabel="Read project →"
+/>
+
+<ProjectCard
+  title="GabrielsMind Enterprise Defense"
+  text="A public project focused on practical enterprise defense thinking, security architecture, and hands-on defensive workflows built to connect technical controls with real operational use."
+  tags={["Enterprise Defense", "Security Architecture", "Blue Team"]}
+  href="https://github.com/GabrielReisSantos/gabrielsmind_enterprise_defense"
+  linkLabel="View repository →"
+/>
+
+<ProjectCard
+  title="My Home SOC Lab"
+  text="A home SOC lab project built to explore monitoring, detection, logging, and investigation workflows in a practical environment designed for learning by doing."
+  tags={["SOC Lab", "Detection", "Monitoring", "Investigation"]}
+  href="https://github.com/GabrielReisSantos/MyhomeSOClab"
+  linkLabel="View repository →"
+/>
     </div>
   </section>
 
   <section class="section research-section">
     <div class="research-grid">
       <div>
-        <p class="eyebrow">Research & reports</p>
-        <h2 class="section-title">Deliverables, not just posts</h2>
+        <p class="eyebrow">Documents</p>
+        <h2 class="section-title">Research & reports</h2>
         <p class="lead">
-          The research section holds reports, write-ups, and presentation material that can be reviewed as actual documents.
+          This section brings together reports, write-ups, and presentation material that are meant to be read as structured deliverables.
         </p>
 
         <div class="button-row">
