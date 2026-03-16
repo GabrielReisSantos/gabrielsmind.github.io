@@ -1,20 +1,239 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionIntro from "../components/SectionIntro.astro";
 ---
 
-<BaseLayout title="Contact | GabrielsMind" description="Contact Gabriel.">
+<BaseLayout
+  title="Contact | GabrielsMind"
+  description="Get in touch for project discussions, collaboration, security work, or professional opportunities."
+>
   <section class="section">
-    <p class="eyebrow">Contact</p>
-    <h1>Get in touch</h1>
-    <p class="lead">
-      The cleanest way to reach me is by email.
-    </p>
+    <div class="container contact-page">
+      <SectionIntro
+        eyebrow="Contact"
+        title="Get in touch"
+        text="For project discussions, collaboration, security work, or professional opportunities, email is the best way to reach me."
+      />
 
-    <div class="card">
-      <p><strong>Email:</strong> <a href="mailto:gabriel@gabrielsmind.io">gabriel@gabrielsmind.io</a></p>
-      <p><strong>Portfolio domain:</strong> <a href="https://gabrielsmind.io">gabrielsmind.io</a></p>
-      <p><strong>LinkedIn:</strong> Add your profile link here.</p>
-      <p class="muted">Later, if you want, we can add a proper form service instead of exposing only email.</p>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <p class="card-label">Primary contact</p>
+          <h2>Email and scheduling</h2>
+          <p class="card-text">
+            The fastest way to reach me is by email. If you already know you want a conversation,
+            you can also book a time directly.
+          </p>
+
+          <div class="contact-list">
+            <div class="contact-item">
+              <span>Email</span>
+              <a href="mailto:gabriel@gabrielsmind.io">gabriel@gabrielsmind.io</a>
+            </div>
+
+            <div class="contact-item">
+              <span>Portfolio</span>
+              <a href="https://gabrielsmind.io" target="_blank" rel="noopener noreferrer">
+                gabrielsmind.io
+              </a>
+            </div>
+
+            <div class="contact-item">
+              <span>Best for</span>
+              <p>Project discussions, collaboration, and professional opportunities.</p>
+            </div>
+          </div>
+
+          <div class="contact-actions">
+            <a class="btn btn-primary" href="mailto:gabriel@gabrielsmind.io">Email me</a>
+            <a
+              class="btn btn-secondary"
+              href="https://calendly.com/YOUR-CALENDLY-LINK"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Book a call
+            </a>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <p class="card-label">Professional profiles</p>
+          <h2>Elsewhere</h2>
+          <p class="card-text">
+            These are the public places where I share work, document projects, and keep my professional profile current.
+          </p>
+
+          <div class="contact-list">
+            <div class="contact-item">
+              <span>LinkedIn</span>
+              <a
+                href="https://www.linkedin.com/in/gabrielreis1712"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                linkedin.com/in/gabrielreis1712
+              </a>
+            </div>
+
+            <div class="contact-item">
+              <span>GitHub</span>
+              <a
+                href="https://github.com/GabrielReisSantos"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                github.com/GabrielReisSantos
+              </a>
+            </div>
+
+            <div class="contact-item">
+              <span>Medium</span>
+              <a
+                href="https://medium.com/@YOUR-MEDIUM"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                medium.com/@YOUR-MEDIUM
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-note">
+        <p class="card-label">Preferred topics</p>
+        <p>
+          I’m most interested in conversations around security engineering, SOC work, infrastructure design,
+          detection workflows, and research-driven technical projects.
+        </p>
+      </div>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .contact-page {
+    padding-top: 2rem;
+    padding-bottom: 5rem;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .contact-card,
+  .contact-note {
+    border-radius: 24px;
+    padding: 1.75rem;
+    background: rgba(13, 20, 40, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.2);
+  }
+
+  .contact-note {
+    margin-top: 1.5rem;
+  }
+
+  .card-label {
+    margin: 0 0 0.5rem;
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .contact-card h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.7rem;
+    line-height: 1.1;
+  }
+
+  .card-text {
+    margin: 0 0 1.5rem;
+    color: var(--muted);
+    max-width: 62ch;
+  }
+
+  .contact-list {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .contact-item {
+    padding-top: 0.85rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .contact-item span {
+    display: block;
+    margin-bottom: 0.35rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .contact-item a {
+    color: var(--text);
+    text-decoration: none;
+    word-break: break-word;
+  }
+
+  .contact-item a:hover {
+    color: var(--accent);
+  }
+
+  .contact-item p {
+    margin: 0;
+    color: var(--text);
+  }
+
+  .contact-actions {
+    display: flex;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+    padding: 0.85rem 1.3rem;
+    border-radius: 999px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.18s ease, opacity 0.18s ease, background 0.18s ease;
+  }
+
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #04111f;
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .contact-note p:last-child {
+    margin: 0;
+    color: var(--text);
+    max-width: 70ch;
+  }
+
+  @media (max-width: 900px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
