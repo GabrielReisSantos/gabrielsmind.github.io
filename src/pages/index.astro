@@ -2,188 +2,288 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import SectionIntro from "../components/SectionIntro.astro";
-import FeatureCard from "../components/FeatureCard.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 ---
 
 <BaseLayout
   title="GabrielsMind | Cybersecurity Portfolio"
-  description="Cybersecurity portfolio, labs, writeups, and projects by Gabriel."
+  description="Cybersecurity portfolio, labs, research, and engineered security work by Gabriel."
 >
   <Hero
-    eyebrow="Cybersecurity · Labs · Detection · Automation"
-    title="Who am I?"
-    text="I am a junior cybersecurity analyst, focused on security operations, detection, and incident investigation. 
-    This portfolio documents how I think, how I investigate, and how I translate security events into operational decisions. 
-    Stay curious. Stay secure."
-    primaryHref="https://github.com/GabrielReisSantos"
+    eyebrow="Cybersecurity · Labs · Detection · Infrastructure"
+    title="Building practical security systems that turn technical risk into business value."
+    text="I build security labs, segmented infrastructure, detection workflows, and research-driven projects that show real engineering judgment — not just tool installation."
+    primaryHref="/projects/"
     primaryLabel="See Projects"
-    secondaryHref="https://medium.com/@gabrielreissantos"
-    secondaryLabel="Read the Blog"
+    secondaryHref="/reports/"
+    secondaryLabel="Read Research"
     imageSrc="/images/hero-escalator.jpg"
     imageAlt="Gabriel in a cinematic urban environment"
   />
 
-  <section class="intro-strip">
-    <div class="container intro-strip-inner">
-      <div>
-        <span class="intro-label">Current direction</span>
-        <p>
-          Practical labs. Detection workflows. Security automation. Clear writeups.
-        </p>
+<section class="intro-strip">
+  <div class="container intro-strip-inner intro-links intro-links-4">
+    <a
+      class="intro-link-card"
+      href="https://app.hackthebox.com/profile/your-profile-id"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Hack The Box profile"
+    >
+      <div class="intro-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4.5 8.5L12 4l7.5 4.5v7L12 20l-7.5-4.5v-7Z" fill="none" stroke="currentColor" stroke-width="1.7" />
+          <path d="M9 10.5h6M9 13.5h6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+        </svg>
       </div>
-      <div>
-        <span class="intro-label">Built for</span>
-        <p>
-          Recruiters, engineers, SOC teams, and anyone who wants proof over buzzwords.
-        </p>
-      </div>
-    </div>
-  </section>
+      <span class="intro-label">Labs & Practice</span>
+      <p>Hack The Box</p>
+    </a>
 
+    <a
+      class="intro-link-card"
+      href="https://www.linkedin.com/in/gabrielreis1712"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="LinkedIn profile"
+    >
+      <div class="intro-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6.94 8.5a1.56 1.56 0 1 1 0-3.12 1.56 1.56 0 0 1 0 3.12ZM5.6 9.85h2.68V18H5.6V9.85Zm4.36 0h2.57v1.11h.04c.36-.68 1.23-1.39 2.53-1.39 2.7 0 3.2 1.78 3.2 4.1V18h-2.68v-3.83c0-.91-.02-2.08-1.27-2.08-1.27 0-1.47.99-1.47 2.02V18H9.96V9.85Z" fill="currentColor"/>
+        </svg>
+      </div>
+      <span class="intro-label">Professional Profile</span>
+      <p>LinkedIn</p>
+    </a>
+
+    <a
+      class="intro-link-card"
+      href="https://github.com/your-github"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="GitHub profile"
+    >
+      <div class="intro-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2C6.48 2 2 6.6 2 12.27c0 4.54 2.87 8.39 6.84 9.75.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.62-3.37-1.2-3.37-1.2-.46-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .08 1.53 1.06 1.53 1.06.9 1.56 2.35 1.11 2.92.85.09-.67.35-1.11.64-1.37-2.22-.26-4.56-1.14-4.56-5.1 0-1.13.39-2.05 1.03-2.78-.1-.26-.45-1.31.1-2.73 0 0 .84-.28 2.75 1.06A9.33 9.33 0 0 1 12 6.84c.85 0 1.7.12 2.5.35 1.9-1.34 2.74-1.06 2.74-1.06.56 1.42.21 2.47.1 2.73.64.73 1.03 1.65 1.03 2.78 0 3.97-2.34 4.84-4.57 5.09.36.32.68.93.68 1.88 0 1.36-.01 2.45-.01 2.78 0 .27.18.6.69.49A10.18 10.18 0 0 0 22 12.27C22 6.6 17.52 2 12 2Z" fill="currentColor"/>
+        </svg>
+      </div>
+      <span class="intro-label">Code & Projects</span>
+      <p>GitHub</p>
+    </a>
+
+    <a
+      class="intro-link-card"
+      href="https://medium.com/@your-medium"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Medium profile"
+    >
+      <div class="intro-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 7.5c0-.2-.02-.38-.14-.55L2.8 5.67V5.5h4.18l3.23 7.08 2.84-7.08H17v.17l-.9.86c-.08.06-.11.12-.1.23V17.2c-.01.1.02.17.1.23l.88.86v.17h-4.45v-.17l.91-.88c.09-.09.09-.11.09-.23V8.74l-3.8 9.69h-.51L4.8 8.74v7.1c-.02.16.04.32.15.43l1.19 1.45v.17H2.78v-.17l1.19-1.45a.62.62 0 0 0 .14-.43V7.5Zm14.95 9.79c0 .08 0 .15.04.2l1.01.98v.17H17v-.17l1-.97a.28.28 0 0 0 .04-.21V8.72a.28.28 0 0 0-.04-.21l-1-.97v-.17H20v.17l-1.01.98c-.04.05-.04.12-.04.2v8.57Z" fill="currentColor"/>
+        </svg>
+      </div>
+      <span class="intro-label">Articles & Notes</span>
+      <p>Medium</p>
+    </a>
+  </div>
+</section>
   <section class="section">
     <SectionIntro
-      eyebrow="Focus"
-      title="What I focus on"
-      text="Not vague cybersecurity branding. Actual practical work, documented clearly."
-    />
-
-    <div class="grid grid-3">
-      <FeatureCard
-        title="SOC & Detection Engineering"
-        text="Alert triage, log pipelines, detection logic, and workflows that help analysts work faster and better."
-      />
-      <FeatureCard
-        title="Security Labs & Automation"
-        text="Hands-on lab environments with Wazuh, TheHive, Shuffle, Proxmox, and realistic adversary simulation."
-      />
-      <FeatureCard
-        title="Research & Communication"
-        text="Writeups that explain technical work clearly enough for engineers, managers, and security stakeholders."
-      />
-    </div>
-  </section>
-
-  <section class="section featured-projects">
-    <SectionIntro
-      eyebrow="Featured Work"
-      title="Projects with real technical weight"
-      text="A few examples of the work I’m building and documenting publicly."
+      eyebrow="Flagship work"
+      title="Projects that carry real technical weight"
+      text="These are the projects that best represent how I design systems, think through security boundaries, and document technical decisions."
     />
 
     <div class="grid grid-3">
       <ProjectCard
+        title="Proxmox Cluster Security Lab"
+        text="A segmented multi-node security lab built to support SOC workflows, hostile-zone testing, malware research isolation, and controlled adversary simulation."
+        tags={["Proxmox", "OPNsense", "Segmentation", "Infrastructure"]}
+        href="/projects/proxmox-cluster-security-lab/"
+      />
+      <ProjectCard
         title="SOC Lab Automation"
-        text="Detection, enrichment, case handling, and response workflows built around Wazuh, TheHive, and Shuffle."
-        tags={["Wazuh", "TheHive", "Shuffle", "SOC"]}
+        text="Detection, enrichment, case handling, and response workflows built around Wazuh, TheHive, Shuffle, and practical triage logic."
+        tags={["Wazuh", "TheHive", "Shuffle", "Detection Engineering"]}
         href="/projects/"
       />
       <ProjectCard
         title="Phishing Triage Platform"
-        text="A system to analyze suspicious emails, domains, and IPs with scoring, automation, and enrichment."
+        text="A structured system for analyzing suspicious emails, domains, and IPs with scoring, enrichment, and investigation support."
         tags={["Phishing", "Threat Intel", "Automation"]}
         href="/projects/"
       />
-      <ProjectCard
-        title="GabrielsMind Study Tools"
-        text="AI-powered learning tools for document Q&A, flashcards, quizzes, and multilingual cybersecurity study."
-        tags={["AI", "Study Tools", "Python"]}
-        href="/projects/"
-      />
+    </div>
+  </section>
+
+  <section class="section research-section">
+    <div class="research-grid">
+      <div>
+        <p class="eyebrow">Research & reports</p>
+        <h2 class="section-title">Deliverables, not just posts</h2>
+        <p class="lead">
+          The research section holds reports, write-ups, and presentation material that can be reviewed as actual documents.
+        </p>
+
+        <div class="button-row">
+          <a class="button primary" href="/reports/">Open Reports Library</a>
+          <a class="button secondary" href="/blog/">Visit Blog</a>
+        </div>
+      </div>
+  </section>
+  <section class="section value-section">
+    <div class="value-grid">
+      <div>
+        <p class="eyebrow">How I work</p>
+        <h2 class="section-title">Architecture first. Tradeoffs explicit. Documentation clean.</h2>
+        <p class="lead">
+          Good technical work is more than standing up tools. The real value is in how systems are segmented, how access is controlled, how use cases are supported, and how decisions are documented.
+        </p>
+      </div>
+
+      <div class="value-card">
+        <ul>
+          <li>Infrastructure built around trust boundaries</li>
+          <li>Labs designed for both offensive and defensive workflows</li>
+          <li>Research published as usable deliverables</li>
+          <li>Projects written so non-trivial thinking is visible</li>
+        </ul>
+      </div>
     </div>
   </section>
 
   <section class="section closing-section">
     <div class="closing-grid">
       <div>
-        <p class="eyebrow">Why this site exists</p>
-        <h2 class="section-title">A cleaner public face for serious work</h2>
-        <p class="lead">
-          Most personal security sites are bloated or generic. This one is meant to be fast,
-          focused, and built around real projects.
-        </p>
+        <p class="eyebrow">Next step</p>
+        <h2 class="section-title">If you want to understand the work, start with the cluster project or the reports library.</h2>
       </div>
 
       <div class="closing-card">
         <p>
-          The goal is simple: show how I think, what I build, and why the work matters.
+          This site is meant to show how I build, think, and document — not just what tools I have touched.
         </p>
 
         <div class="button-row">
-          <a class="button primary" href="/contact/">Contact Me</a>
-          <a class="button secondary" href="/about/">More About Me</a>
+          <a class="button primary" href="/projects/">See Projects</a>
+          <a class="button secondary" href="/contact/">Contact Me</a>
         </div>
       </div>
     </div>
   </section>
 
   <style>
-    .intro-strip {
-      position: relative;
-      margin-top: -2rem;
-      z-index: 3;
-    }
+.intro-strip {
+  position: relative;
+  margin-top: -2rem;
+  z-index: 3;
+}
 
-    .intro-strip-inner {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem;
-      padding: 1rem;
-      border-radius: 22px;
-      background: rgba(8, 14, 28, 0.62);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(14px);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.24);
-    }
+.intro-strip-inner {
+  display: grid;
+  gap: 0;
+  padding: 0;
+  border-radius: 22px;
+  overflow: hidden;
+  background: rgba(8, 14, 28, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.24);
+}
 
-    .intro-label {
-      display: inline-block;
-      margin-bottom: 0.45rem;
-      color: var(--accent);
-      font-size: 0.78rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
+.intro-links-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
 
-    .intro-strip p {
-      margin: 0;
-      color: var(--muted);
-    }
+.intro-link-card {
+  padding: 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  text-align: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  transition: background 0.18s ease, transform 0.18s ease;
+  min-height: 110px;
+}
 
-    .featured-projects {
-      position: relative;
-    }
+.intro-link-card:last-child {
+  border-right: 0;
+}
 
-    .closing-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 1.5rem;
-      align-items: start;
-    }
+.intro-link-card:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
 
-    .closing-card {
-      padding: 1.5rem;
-      border-radius: 24px;
-      background: linear-gradient(180deg, rgba(20, 28, 52, 0.82), rgba(11, 18, 36, 0.95));
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.24);
-    }
+.intro-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text);
+}
 
-    .closing-card p {
-      margin-top: 0;
-      color: var(--muted);
-    }
+.intro-icon svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
 
-    @media (max-width: 900px) {
-      .intro-strip-inner,
-      .closing-grid {
-        grid-template-columns: 1fr;
-      }
+.intro-label {
+  display: inline-block;
+  margin-bottom: 0;
+  color: var(--accent);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
 
-      .intro-strip {
-        margin-top: -1rem;
-      }
-    }
+.intro-link-card p {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.98rem;
+  font-weight: 600;
+}
+
+@media (max-width: 1100px) {
+  .intro-links-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .intro-link-card:nth-child(2) {
+    border-right: 0;
+  }
+
+  .intro-link-card:nth-child(1),
+  .intro-link-card:nth-child(2) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+@media (max-width: 700px) {
+  .intro-links-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .intro-link-card {
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .intro-link-card:last-child {
+    border-bottom: 0;
+  }
+
+  .intro-strip {
+    margin-top: -1rem;
+  }
+}
   </style>
 </BaseLayout>

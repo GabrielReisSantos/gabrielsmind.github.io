@@ -1,0 +1,44 @@
+<section class="tradeoffs-block">
+  <p class="eyebrow">Design tradeoffs</p>
+  <h2 class="section-title">What this design chooses on purpose</h2>
+
+  <div class="trade-grid">
+    <article class="trade-card">
+      <h3>Segmentation over convenience</h3>
+      <p>More firewall work and more planning, but clearer trust boundaries and safer testing paths.</p>
+    </article>
+
+    <article class="trade-card">
+      <h3>VPN-first admin access</h3>
+      <p>Less convenience than public management exposure, but dramatically better control of the management plane.</p>
+    </article>
+
+    <article class="trade-card">
+      <h3>Contained aquarium zone</h3>
+      <p>More operational overhead, but much better safety for malware detonation, capture, and rollback-based analysis.</p>
+    </article>
+
+    <article class="trade-card">
+      <h3>Clustered, not magically HA</h3>
+      <p>Cluster membership gives coordination, not automatic resilience. HA still requires deliberate storage and failover design.</p>
+    </article>
+  </div>
+</section>
+
+<style>
+  .trade-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+  .trade-card {
+    padding: 1.25rem;
+    border-radius: 20px;
+    background: linear-gradient(180deg, rgba(20, 28, 52, 0.86), rgba(11, 18, 36, 0.96));
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 18px 48px rgba(0,0,0,0.24);
+  }
+  .trade-card h3 { margin-top: 0; margin-bottom: 0.7rem; }
+  .trade-card p { margin: 0; color: var(--muted); }
+</style>

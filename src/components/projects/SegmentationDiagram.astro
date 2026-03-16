@@ -1,0 +1,76 @@
+<section class="diagram-block">
+  <div class="diagram-header">
+    <p class="eyebrow">Segmentation diagram</p>
+    <h2 class="section-title">Trust boundaries by zone</h2>
+    <p class="lead">
+      The lab is intentionally separated into management, lab, attacker, victim, SOC, VPN, and quarantine-oriented zones instead of one flat network.
+    </p>
+  </div>
+
+  <div class="seg-grid">
+    <div class="seg-card management">
+      <h3>Management</h3>
+      <p>Proxmox management, administrative SSH, cluster UI.</p>
+    </div>
+    <div class="seg-card cluster">
+      <h3>Cluster / Internal</h3>
+      <p>Internal services and cluster communication.</p>
+    </div>
+    <div class="seg-card lab">
+      <h3>Lab / Server Zone</h3>
+      <p>Internal infrastructure and general lab workloads.</p>
+    </div>
+    <div class="seg-card attacker">
+      <h3>Attacker Zone</h3>
+      <p>Red-team style machines and noisy testing systems.</p>
+    </div>
+    <div class="seg-card victim">
+      <h3>Victim Zone</h3>
+      <p>Simulated endpoints, services, and demonstration targets.</p>
+    </div>
+    <div class="seg-card soc">
+      <h3>SOC / Monitoring</h3>
+      <p>Logging, monitoring, traffic analysis, and detection tooling.</p>
+    </div>
+    <div class="seg-card vpn">
+      <h3>VPN Clients</h3>
+      <p>Administrative peer address space for WireGuard access.</p>
+    </div>
+    <div class="seg-card aquarium">
+      <h3>Aquarium / Quarantine</h3>
+      <p>Malware detonation, packet capture, artifact collection, rollback-driven analysis.</p>
+    </div>
+    <div class="seg-card simulation">
+      <h3>Controlled Internet Simulation</h3>
+      <p>Fake services, sinkhole behavior, INetSim-style observation.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .diagram-block { padding: 2rem 0; }
+  .seg-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .seg-card {
+    padding: 1.25rem;
+    border-radius: 20px;
+    background: linear-gradient(180deg, rgba(20, 28, 52, 0.86), rgba(11, 18, 36, 0.96));
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 18px 48px rgba(0,0,0,0.24);
+  }
+  .seg-card h3 { margin-top: 0; margin-bottom: 0.6rem; }
+  .seg-card p { margin: 0; color: var(--muted); }
+  .management { border-left: 4px solid #34d399; }
+  .cluster { border-left: 4px solid #60a5fa; }
+  .lab { border-left: 4px solid #a78bfa; }
+  .attacker { border-left: 4px solid #f87171; }
+  .victim { border-left: 4px solid #fbbf24; }
+  .soc { border-left: 4px solid #5eead4; }
+  .vpn { border-left: 4px solid #93c5fd; }
+  .aquarium { border-left: 4px solid #f97316; }
+  .simulation { border-left: 4px solid #c084fc; }
+</style>

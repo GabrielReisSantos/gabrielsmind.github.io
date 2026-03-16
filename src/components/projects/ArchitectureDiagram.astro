@@ -1,0 +1,79 @@
+<section class="diagram-block">
+  <div class="diagram-header">
+    <p class="eyebrow">Architecture diagram</p>
+    <h2 class="section-title">Cluster access and control flow</h2>
+    <p class="lead">
+      The environment is built around firewall-mediated access, with WireGuard terminating on OPNsense before access reaches management or lab zones.
+    </p>
+  </div>
+
+  <div class="diagram-shell">
+    <div class="node outer">Admin Workstation</div>
+    <div class="arrow">↓ WireGuard</div>
+    <div class="node core">OPNsense Firewall</div>
+
+    <div class="branches">
+      <div class="branch">Management Zone</div>
+      <div class="branch">SOC / Monitoring</div>
+      <div class="branch">Lab / Server Zone</div>
+      <div class="branch">Victim Zone</div>
+      <div class="branch">Attacker Zone</div>
+      <div class="branch danger">Aquarium / Quarantine Zone</div>
+    </div>
+
+    <div class="arrow subtle">Aquarium → controlled simulation / capture / sinkhole</div>
+    <div class="branch sim">Controlled Internet Simulation</div>
+  </div>
+</section>
+
+<style>
+  .diagram-block { padding: 2rem 0; }
+  .diagram-shell {
+    margin-top: 1.5rem;
+    padding: 2rem;
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(20, 28, 52, 0.82), rgba(11, 18, 36, 0.95));
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 18px 48px rgba(0,0,0,0.24);
+    text-align: center;
+  }
+  .node, .branch, .sim {
+    padding: 0.9rem 1rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.03);
+    font-weight: 700;
+  }
+  .outer { max-width: 260px; margin: 0 auto; }
+  .core {
+    max-width: 300px;
+    margin: 0 auto 1.25rem;
+    background: rgba(94,234,212,0.08);
+    border-color: rgba(94,234,212,0.2);
+  }
+  .branches {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.9rem;
+    margin-top: 1rem;
+  }
+  .danger {
+    border-color: rgba(245, 158, 11, 0.22);
+    background: rgba(245, 158, 11, 0.08);
+  }
+  .sim {
+    max-width: 320px;
+    margin: 1rem auto 0;
+    border-color: rgba(96,165,250,0.22);
+    background: rgba(59,130,246,0.08);
+  }
+  .arrow {
+    color: var(--muted);
+    margin: 0.9rem 0;
+    font-weight: 700;
+  }
+  .arrow.subtle {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+  }
+</style>

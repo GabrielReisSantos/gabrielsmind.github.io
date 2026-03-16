@@ -1,0 +1,192 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+import SectionIntro from "../../components/SectionIntro.astro";
+---
+
+<BaseLayout
+  title="Proxmox Cluster Security Lab | GabrielsMind"
+  description="A segmented Proxmox cluster built to support SOC workflows, hostile-zone testing, security research isolation, and realistic cyber lab operations."
+>
+  <Hero
+    eyebrow="Proxmox · Segmentation · Security Lab · Infrastructure"
+    title="A Proxmox cluster built as security infrastructure, not just virtualization."
+    text="This project is a multi-node security lab designed to support SOC workflows, adversary simulation, isolated research zones, and controlled cyber experimentation. The design focus was not only compute — it was segmentation, containment, and operational realism."
+    primaryHref="/reports/"
+    primaryLabel="Read Research"
+    secondaryHref="/contact/"
+    secondaryLabel="Contact Me"
+    imageSrc="/images/about-reflection.jpg"
+    imageAlt="Gabriel working with a laptop in an urban setting"
+  />
+
+  <section class="intro-strip">
+    <div class="container intro-strip-inner">
+      <div>
+        <span class="intro-label">Core goal</span>
+        <p>Build a flexible virtualized lab that supports both security operations and adversary testing without collapsing into one flat network.</p>
+      </div>
+      <div>
+        <span class="intro-label">Engineering focus</span>
+        <p>Segmentation, node roles, isolated zones, firewall control, and infrastructure that supports realistic technical scenarios.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <SectionIntro
+      eyebrow="Overview"
+      title="Why this project exists"
+      text="Many labs fail because they are built as collections of tools instead of systems. This cluster was designed as a foundation for multiple security use cases."
+    />
+
+    <div class="grid grid-2">
+      <article class="card">
+        <h3>Problem</h3>
+        <p class="muted">
+          A useful cyber lab needs more than virtualization. It needs isolation boundaries, realistic network paths, role separation, and room for both offensive and defensive workflows.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Approach</h3>
+        <p class="muted">
+          Build a Proxmox-based cluster with segmented zones, security-aware node usage, and supporting infrastructure that can host SOC tooling, hostile networks, controlled victim systems, and research workloads.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <SectionIntro
+      eyebrow="Architecture"
+      title="What the environment is designed to support"
+      text="The cluster is intended to support multiple parallel use cases without turning the lab into one insecure flat environment."
+    />
+
+    <div class="grid grid-3">
+      <article class="card">
+        <h3>SOC operations</h3>
+        <p class="muted">Security monitoring, log ingestion, enrichment, triage, and detection workflow testing.</p>
+      </article>
+      <article class="card">
+        <h3>Hostile-zone testing</h3>
+        <p class="muted">Controlled attacker-to-victim paths, malware research isolation, and adversary simulation with containment in mind.</p>
+      </article>
+      <article class="card">
+        <h3>Infrastructure experimentation</h3>
+        <p class="muted">Virtual networking, firewall policies, service placement, and secure remote access design.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <SectionIntro
+      eyebrow="Security design"
+      title="Engineering choices that matter"
+      text="These are the decisions that make the project worth showing, because they demonstrate technical judgment rather than just installation effort."
+    />
+
+    <div class="grid grid-2">
+      <article class="card">
+        <h3>Segmentation first</h3>
+        <p class="muted">
+          Zones are separated intentionally instead of sharing a flat lab network. This reduces risk, makes attack paths clearer, and improves realism for both offensive and defensive scenarios.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Role-driven infrastructure</h3>
+        <p class="muted">
+          Compute resources, nodes, and services are placed based on function. That makes the lab easier to operate, scale, troubleshoot, and explain.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Firewall and boundary control</h3>
+        <p class="muted">
+          The environment is built with security boundaries in mind, using firewall logic and controlled pathways between networks rather than unrestricted east-west movement.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Built for realistic workflows</h3>
+        <p class="muted">
+          The goal is not just spinning up VMs. The goal is supporting detection engineering, incident response, hostile testing, and research under realistic constraints.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <SectionIntro
+      eyebrow="What I learned"
+      title="Technical lessons from the project"
+      text="The strongest infrastructure projects are not just builds. They are opportunities to learn where architecture, usability, and security friction actually appear."
+    />
+
+    <div class="card">
+      <ul class="learn-list">
+        <li>Segmentation decisions become much easier when the use cases are defined first.</li>
+        <li>Cluster design needs operational clarity, not just hardware availability.</li>
+        <li>Security labs gain value when they support both detection and adversary perspectives.</li>
+        <li>Infrastructure projects become stronger when they are documented as systems, not screenshots.</li>
+      </ul>
+    </div>
+  </section>
+
+  <style>
+    .intro-strip {
+      position: relative;
+      margin-top: -2rem;
+      z-index: 3;
+    }
+
+    .intro-strip-inner {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      padding: 1rem;
+      border-radius: 22px;
+      background: rgba(8, 14, 28, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.24);
+    }
+
+    .intro-label {
+      display: inline-block;
+      margin-bottom: 0.45rem;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .intro-strip p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .learn-list {
+      margin: 0;
+      padding-left: 1.25rem;
+      color: var(--muted);
+    }
+
+    .learn-list li + li {
+      margin-top: 0.8rem;
+    }
+
+    @media (max-width: 900px) {
+      .intro-strip-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .intro-strip {
+        margin-top: -1rem;
+      }
+    }
+  </style>
+</BaseLayout>
