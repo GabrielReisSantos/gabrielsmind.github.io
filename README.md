@@ -1,43 +1,51 @@
-# Astro Starter Kit: Minimal
+# GabrielsMind — cybersecurity portfolio
 
-```sh
-npm create astro@latest -- --template minimal
+**Offense by curiosity. Defense by design. :)**
+
+This is the Astro-based portfolio for Gabriel Reis Santos. It showcases security engineering, cybersecurity lab projects, research, reports, credentials, articles and professional contact information.
+
+## Design
+
+The redesign uses a unified CyberLab identity: deep navy `#09111d`, mint `#64e7bc`, cyan `#69bfe5`, dark panels `#132231`, and accessible typography. The homepage includes a small **synthetic** network visualization with offensive and defensive perspectives. It does not make real network requests or perform attacks.
+
+## Routes and project preservation
+
+| Page | Path |
+| --- | --- |
+| Home | `/` |
+| About | `/about/` |
+| Projects | `/projects/` |
+| Proxmox case study | `/projects/proxmox-cluster-security-lab/` |
+| Cyber Academy overview | `/academy/` |
+| Existing CyberLab demonstration | `/cyberlab/` |
+| Reports and PDFs | `/reports/` |
+| Certifications and roadmap | `/certifications/` |
+| Blog | `/blog/` |
+| Contact | `/contact/` |
+
+Existing original photos, PDF files, report cover images and Proxmox markdown content are preserved, along with the original GitHub Pages deployment workflow. The `/training/` subpath is reserved for deploying the separate advanced CyberLab application later; it is not included in this portfolio bundle.
+
+## Run locally
+
+Requires Node.js **22.12 or newer**.
+
+```bash
+npm ci
+npm run verify:content
+npm run build
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Visit the URL displayed by Astro, normally `http://localhost:4321`.
 
-## 🚀 Project Structure
+The included `verify:content` test checks for required pages, project listings, certification entries, and preserved assets. **It is not a substitute for `npm run build` or browser checks.**
 
-Inside of your Astro project, you'll see the following folders and files:
+## Deploy
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+The existing `.github/workflows/deploy.yml` publishes the site from the `main` branch using `withastro/action`. Upload the files to the root of the existing repository, commit, push to `main`, and review the GitHub Actions logs. Do not delete the existing `public/` folder.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Publication review
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+See [REDESIGN_NOTES.md](REDESIGN_NOTES.md) for the preservation audit, credential notes, dependencies and production checklist.
 
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+In particular, **AZ-200** is retained as the code the portfolio owner provided, with its exact designation flagged for verification. Do not replace it with a different Azure certificate code unless the owner confirms it. The Contact page still carries the original contact domain and address until the owner confirms whether those should be changed.

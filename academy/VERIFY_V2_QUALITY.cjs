@@ -1,0 +1,23 @@
+/* v2.x quality: executable progress regressions plus navigation/backup invariants. */
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),cp=require('node:child_process');let n=0;
+const read=p=>fs.readFileSync(path.join(__dirname,p),'utf8');const check=(v,l)=>{assert.ok(v,l);n++;};
+const out=path.join(__dirname,'.v11-verify');fs.mkdirSync(out,{recursive:true});
+const cmd=cp.spawnSync('tsc',['--target','ES2022','--module','commonjs','--moduleResolution','node','--resolveJsonModule','--esModuleInterop','--strict','--skipLibCheck','--outDir',out,'src/learning/progress.ts'],{cwd:__dirname,encoding:'utf8'});if(cmd.status!==0)throw Error(cmd.stderr+'\n'+cmd.stdout);
+fs.writeFileSync(path.join(out,'package.json'),JSON.stringify({type:'commonjs'}));
+const {readLearningProgress,readSavedLocation,EXERCISE_TOTALS}=require(path.join(out,'learning/progress.js'));
+const {NETWORK_QUESTIONS}=require(path.join(out,'foundations/knowledge.js'));const {QUESTIONS}=require(path.join(out,'certification/blueprints.js'));
+const reader=values=>({getItem:key=>values[key]??null});const [q1,q2]=NETWORK_QUESTIONS,[c1,c2]=QUESTIONS;
+const vals={'cyberlab-ccna-answers-v4':JSON.stringify({[q1.id]:q1.correct,[q2.id]:-1}),'cyberlab-cert-answers-v3':JSON.stringify({[c1.id]:{choice:c1.correct,correct:true},[c2.id]:{choice:-1,correct:false}}),'cyberlab-v8-solved-advanced':'["campus"]'};
+const p=readLearningProgress(reader(vals),'advanced');for(const [k,v] of [['ccnaCorrect',1],['ccnaReviewed',2],['certCorrect',1],['certAttempted',2],['topologyValidated',1]])check(p[k]===v,`progress ${k}`);
+check(p.ccnaTotal===NETWORK_QUESTIONS.length,'CCNA source denominator');check(p.certTotal===QUESTIONS.length,'certification source denominator');
+check(readLearningProgress(reader({'cyberlab-cert-answers-v3':'oops'})).certAttempted===0,'invalid progress safe');
+check(readSavedLocation(reader({'cyberlab-v11-last-activity':JSON.stringify({page:'world',at:10,detail:'campus'})}))?.detail==='campus','detail survives');
+check(readSavedLocation(reader({'cyberlab-v11-last-activity':JSON.stringify({page:'admin',at:10})}))===null,'invalid route rejected');
+const app=read('src/experience/App.tsx'),dash=read('src/experience/Dashboard.tsx'),cat=read('src/experience/Catalog.tsx'),world=read('src/threeD/WorldLab.tsx'),map=read('src/threeD/NetworkMap2D.tsx'),backup=read('src/learning/ProgressBackup.tsx');
+for(const s of ['storeLocation','hashchange','savedDetail','LearningGuide','mapMode','NetworkMap2D','aria-pressed','onUnavailable','Run forwarding'])check([app,dash,cat,world,map,backup,read('src/pentest/PentestAcademy.tsx'),read('src/foundations/FoundationsHub.tsx')].some(v=>v.includes(s)),`retained capability ${s}`);
+for(const s of ['export','import','Confirm import'])check(backup.toLowerCase().includes(s.toLowerCase()),`backup ${s}`);
+check(read('src/learning/backupEngine.ts').includes('cyberlab-local-backup'),'backup structured format and migration compatibility');
+for(const s of ['getByRole','2D accessible map','training','Resume'])check(read('tests/browser/launch.spec.ts').includes(s),`browser baseline ${s}`);
+for(const s of ['#world','#purple','#certification','#learn','#labs','#investigate','#progress'])check(read('tests/browser/experience.spec.ts').includes(s),`v2 browser route ${s}`);
+check(read('vite.config.ts').includes("base: '/training/'"),'training base');check(EXERCISE_TOTALS.world===4&&EXERCISE_TOTALS.troubleshoot===8,'simulation totals');check(/^(?:2|3)\.(?:0|1|2|3|4|5|6|7|8|9)\./.test(JSON.parse(read('package.json')).version),'v2 metadata');
+console.log(`CyberLab v2.x quality: ${n} progress/compatibility/source assertions passed (browser tests separately required).`);

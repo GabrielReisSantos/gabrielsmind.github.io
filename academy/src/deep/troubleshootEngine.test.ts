@@ -1,0 +1,9 @@
+import {describe,it,expect} from 'vitest';
+import {CASES,diagnosticOutput,runProbe,validateTroubleshootCompletion} from './troubleshootEngine';
+describe('v0.5 troubleshooting gate',()=>{
+ it('starts every fixture faulty and repairs using its intended value',()=>{expect(CASES.length).toBe(8);for(const c of CASES){expect(runProbe(c,c.initial).pass).toBe(false);expect(runProbe(c,c.correct).pass).toBe(true);}});
+ it('treats unsafe allow-all as a violation even when connectivity works',()=>{for(const id of ['vlan','policy','appid','return']){const c=CASES.find(x=>x.id===id)!;const r=runProbe(c,id==='vlan'?'all':id==='policy'?'open':id==='appid'?'any':'disable');expect(r.connected).toBe(true);expect(r.pass).toBe(false);expect(r.securityVerified).toBe(false);}});
+ it('distinguishes successful TLS from content visibility',()=>{const c=CASES.find(x=>x.id==='decrypt')!;const a=runProbe(c,c.initial);expect(a.connected).toBe(true);expect(a.securityVerified).toBe(false);expect(a.trace.some(s=>s.id==='visibility'&&s.status==='warn')).toBe(true);});
+ it('requires distinct commands, correct hypothesis and a fail-to-pass replay',()=>{const c=CASES[0];expect(validateTroubleshootCompletion(c,c.correct,c.correctHypothesis,[c.commands[0],c.commands[0]],true,true).complete).toBe(false);expect(validateTroubleshootCompletion(c,c.correct,0,[c.commands[0],c.commands[1]],true,true).complete).toBe(false);expect(validateTroubleshootCompletion(c,c.correct,c.correctHypothesis,[c.commands[0],c.commands[1]],true,false).complete).toBe(false);expect(validateTroubleshootCompletion(c,c.correct,c.correctHypothesis,[c.commands[0],c.commands[1]],true,true).complete).toBe(true);});
+ it('only offers allowed diagnostic fixture commands',()=>{const c=CASES[3];expect(diagnosticOutput(c,c.initial,'whoami')).toContain('No shell');expect(diagnosticOutput(c,c.initial,'show nat policy')).toContain('No matching DNAT');});
+});

@@ -1,108 +1,13 @@
 ---
-interface Props {
-  title: string;
-  text: string;
-  tags?: string[];
-  href?: string;
-  linkLabel?: string;
-  label?: string;
-}
-
-const {
-  title,
-  text,
-  tags = [],
-  href,
-  linkLabel = "Explore project →",
-  label = "Project",
-} = Astro.props;
+interface Props{title:string;text:string;tags?:string[];href?:string;linkLabel?:string;label?:string}
+const {title,text,tags=[],href,linkLabel="Explore project →",label="Project"}=Astro.props;
+const artType=/proxmox|cluster/i.test(title)?"servers":/academy/i.test(title)?"academy":/cyberlab/i.test(title)?"network":/enterprise/i.test(title)?"shield":"signals";
 ---
-
-<article class="project-card">
-  <p class="project-label">{label}</p>
-  <h3>{title}</h3>
-  <p class="project-text">{text}</p>
-
-  {tags.length > 0 && (
-    <div class="project-tags">
-      {tags.map((tag) => (
-        <span>{tag}</span>
-      ))}
-    </div>
-  )}
-
-  {href && (
-    <a
-      class="project-link"
-      href={href}
-      target={href.startsWith("http") ? "_blank" : undefined}
-      rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-    >
-      {linkLabel}
-    </a>
-  )}
-</article>
-
-<style>
-  .project-card {
-    border-radius: 26px;
-    padding: 1.65rem;
-    background: linear-gradient(180deg, rgba(13, 20, 40, 0.76), rgba(9, 16, 32, 0.9));
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.22);
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .project-label {
-    margin: 0 0 0.8rem;
-    color: var(--accent);
-    font-size: 0.78rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-
-  .project-card h3 {
-    margin: 0 0 0.95rem;
-    font-size: 1.95rem;
-    line-height: 1.05;
-  }
-
-  .project-text {
-    margin: 0 0 1.3rem;
-    color: var(--muted);
-    line-height: 1.7;
-    flex-grow: 1;
-  }
-
-  .project-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.65rem;
-    margin-bottom: 1.4rem;
-  }
-
-  .project-tags span {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.52rem 0.88rem;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--muted);
-    font-size: 0.9rem;
-  }
-
-  .project-link {
-    display: inline-flex;
-    align-items: center;
-    color: var(--text);
-    text-decoration: none;
-    font-weight: 700;
-  }
-
-  .project-link:hover {
-    color: var(--accent);
-  }
-</style>
+<article class="project-card"><div class="project-card-top"><span class="project-label">{label}</span><span class="project-cross" aria-hidden="true">↗</span></div><div class={`project-art art-${artType}`} aria-hidden="true">
+{artType==="servers"&&<div class="server-stack"><span><i></i><b></b><b></b></span><span><i></i><b></b><b></b></span><span><i></i><b></b><b></b></span></div>}
+{artType==="network"&&<svg viewBox="0 0 270 110"><path d="M45 55H118 M153 55H222 M135 40V15 M135 70V94" stroke="#468f87" fill="none" stroke-width="2"/><circle cx="45" cy="55" r="12"/><circle cx="135" cy="55" r="18" class="focus"/><circle cx="222" cy="55" r="12"/><circle cx="135" cy="13" r="9"/><circle cx="135" cy="97" r="9"/></svg>}
+{artType==="academy"&&<div class="academy-stack"><span>01 <b>LEARN</b> <i>●</i></span><span>02 <b>INVESTIGATE</b> <i>●</i></span><span>03 <b>VALIDATE</b> <i>✓</i></span></div>}
+{artType==="shield"&&<div class="shield-shape"><span>◆</span></div>}
+{artType==="signals"&&<div class="signals-shape"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>}
+</div><h3>{title}</h3><p class="project-text">{text}</p>{tags.length>0&&<div class="project-tags">{tags.map(tag=><span>{tag}</span>)}</div>}{href&&<a class="project-link" href={href} target={href.startsWith('http')?'_blank':undefined} rel={href.startsWith('http')?'noopener noreferrer':undefined}>{linkLabel}</a>}</article>
+<style>.project-card{border:1px solid var(--border);border-radius:9px;padding:24px;background:linear-gradient(155deg,#142a3a,#0e1c29);min-height:100%;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:transform .2s,border-color .2s}.project-card:hover{transform:translateY(-4px);border-color:#528f89}.project-card-top{display:flex;justify-content:space-between}.project-label{color:var(--accent);font:700 11px ui-monospace,monospace;text-transform:uppercase;letter-spacing:.12em}.project-cross{color:#7797a4;font-size:18px}.project-art{height:102px;position:relative;display:grid;place-items:center;margin:6px 0 18px;background:radial-gradient(circle at 49% 50%,#25525455,transparent 51%);overflow:hidden}.server-stack{width:116px;transform:perspective(200px) rotateX(7deg)}.server-stack span{display:flex;align-items:center;gap:7px;padding:5px 8px;height:26px;border:1px solid #3a7878;background:#12393f;margin:4px;border-radius:3px;box-shadow:3px 4px 0 #091a2b}.server-stack i{height:6px;width:6px;border-radius:50%;background:var(--accent)}.server-stack b{height:2px;width:20px;background:#5a9b9c;margin-left:auto}.server-stack b:last-child{width:10px;margin:0}.art-network svg{height:100px;width:min(260px,100%);overflow:visible}.art-network circle{fill:#123c42;stroke:#73c7b7;stroke-width:2}.art-network circle.focus{stroke:var(--accent);fill:#206058;filter:drop-shadow(0 0 7px #53ddae)}.academy-stack{display:grid;gap:4px;width:180px;transform:rotate(-4deg)}.academy-stack span{border:1px solid #376675;background:#112f3e;color:#89c1bd;font:750 9px ui-monospace,monospace;padding:4px 9px}.academy-stack b{color:#d4ecec;padding:0 13px}.academy-stack i{float:right;color:var(--accent);font-style:normal}.shield-shape{border:1px solid #4b9e8a;width:80px;height:80px;transform:rotate(45deg);border-radius:15px;display:grid;place-items:center;background:#103c3b;box-shadow:0 0 0 13px #1c51443a}.shield-shape span{transform:rotate(-45deg);color:var(--accent);font-size:30px}.signals-shape{height:68px;display:flex;align-items:center;gap:7px}.signals-shape span{width:6px;height:30%;background:#62c5b2;box-shadow:0 0 7px #66e5b444}.signals-shape span:nth-child(3n){height:75%;background:#69bfe5}.signals-shape span:nth-child(2n){height:55%}.signals-shape span:nth-child(5n){height:100%;background:var(--accent)}.project-card h3{font-size:clamp(1.35rem,2vw,1.8rem);margin:0 0 16px}.project-text{font-size:13px;line-height:1.8;flex:1;margin-bottom:22px}.project-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:23px}.project-tags span{font:600 10px ui-monospace,monospace;color:#aac5cf;border:1px solid #2f4c5a;padding:6px 9px;border-radius:3px}.project-link{font:800 11px ui-monospace,monospace;color:var(--accent);margin-top:auto;letter-spacing:.02em}.project-link:hover{text-decoration:underline}</style>

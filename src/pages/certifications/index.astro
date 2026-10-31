@@ -1,195 +1,62 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import Hero from "../../components/Hero.astro";
-import SectionIntro from "../../components/SectionIntro.astro";
-import CertificationCard from "../../components/CertificationCard.astro";
-
-const certifications = [
-  {
-    title: "CCNA",
-    issuer: "Cisco",
-    status: "Completed",
-    year: "2025",
-    summary:
-      "Core networking certification covering routing, switching, IP services, security fundamentals, and operational troubleshooting.",
-    skills: ["Networking", "Routing", "Switching", "Troubleshooting"],
-    href: "https://www.credly.com/badges/fabf850f-cc6f-4eb7-b2bd-101328e81314",
-  },
-  {
-  title: "Fortinet Certified Associate in Cybersecurity",
-  issuer: "Fortinet",
-  status: "Completed",
-  year: "2025",
-  credentialId: "54213480186S",
-  summary:
-    "Foundational certification focused on core cybersecurity concepts, threat awareness, security operations context, and practical defensive understanding.",
-  skills: ["Cybersecurity Fundamentals", "Threat Awareness", "Security Operations", "Defensive Thinking"],
-  href: "https://training.fortinet.com/admin/tool/certificate/index.php",
-  },
-  {
-  title: "HTB Pro Labs - Dante",
-  issuer: "Hack The Box",
-  status: "Completed",
-  year: "Mar 2026",
-  credentialId: "HTBCERT-1B9BEB9C29",
-  summary:
-    "Hands-on offensive security lab focused on realistic enterprise-style attack paths, privilege escalation, enumeration discipline, and practical exploitation in a controlled lab environment.",
-  skills: ["Enumeration", "Privilege Escalation", "Internal Network", "Offensive Security", "Active Directory"],
-  },
-  {
-    title: "OSCP",
-    issuer: "OffSec",
-    status: "In Progress",
-    year: "2026 target",
-    summary:
-      "Practical offensive security training focused on enumeration, exploitation, privilege escalation, and disciplined reporting.",
-    skills: ["Enumeration", "Privilege Escalation", "Web", "AD"],
-    href: "#",
-  },
-  {
-    title: "GIAC GRID",
-    issuer: "GIAC",
-    status: "Planned",
-    year: "2027 target",
-    summary:
-      "Industrial cybersecurity track aligned with defending OT and ICS environments through practical technical understanding.",
-    skills: ["ICS", "OT Security", "Industrial Defense", "Risk"],
-    href: "#",
-  },
+const completed = [
+  { title: "Cisco Certified Network Associate (CCNA)", issuer: "Cisco", detail: "2026", href: "https://www.credly.com/badges/fabf850f-cc6f-4eb7-b2bd-101328e81314", linkLabel: "View credential" },
+  { title: "CompTIA Security+", issuer: "CompTIA", href: "https://www.credly.com/badges/dd60fec9-86c5-4de2-b068-2cffd888d92a", linkLabel: "View credential" },
+  { title: "Security Operations Professional", issuer: "Palo Alto Networks", href: "https://www.credly.com/badges/ec43a042-4822-4e93-82c6-6c4ec3919f97", linkLabel: "View credential" },
+  { title: "Microsoft Certified: Security Operations Analyst Associate", issuer: "Microsoft", detail: "SC-200", href: "https://learn.microsoft.com/en-us/credentials/certifications/security-operations-analyst/", linkLabel: "About certification" },
+  { title: "Fortinet Certified Associate in Cybersecurity", issuer: "Fortinet", detail: "2025 · ID 54213480186S" },
+  { title: "Penetration Testing, Threat Hunting, and Cryptography", issuer: "IBM", href: "https://www.credly.com/badges/dc3f0610-689b-4715-b0bf-4469ce63ef29", linkLabel: "View credential" },
+];
+const achievements = [
+  { title: "Zephyr", type: "Pro Lab", platform: "HTB Labs", date: "Mar 2026", status: "Verified" },
+  { title: "Dante", type: "Pro Lab", platform: "HTB Labs", date: "Mar 2026", status: "Verified" },
+];
+const htbProfile = "https://profile.hackthebox.com/profile/019cbeff-c958-7184-b047-f0d25cc9dec8";
+const development = [
+  { title: "OSCP", issuer: "OffSec", status: "In progress" },
+  { title: "GIAC GRID", issuer: "GIAC", status: "Planned" },
 ];
 ---
-
-<BaseLayout
-  title="Certifications | GabrielsMind"
-  description="Certifications, exam roadmap, and structured professional development at GabrielsMind."
->
-  <Hero
-    eyebrow="Certifications · Skills · Roadmap"
-    text="This page tracks the certifications that matter to my direction: networking, offensive security, SOC work, and eventually industrial cybersecurity."
-    primaryHref="/projects/"
-    primaryLabel="See Projects"
-    secondaryHref="/reports/"
-    secondaryLabel="Read Research"
-    imageSrc="/images/about-reflection.jpg"
-    imageAlt="Gabriel working with a laptop in an urban setting"
-  />
-
-  <section class="intro-strip">
-    <div class="container intro-strip-inner">
-      <div>
-        <span class="intro-label">How to read this page</span>
-        <p>Each certification on this page is tied to a technical direction I am actively building toward.</p>
+<BaseLayout title="Certifications | GabrielsMind" description="Gabriel Reis Santos — certifications in networking, security operations, cloud security and offensive security.">
+  <div class="container credentials-page">
+    <header class="credentials-heading"><p class="eyebrow">Gabriel Reis Santos</p><h1>Certifications<span class="mint">.</span></h1><p>Professional credentials and hands-on training.</p></header>
+    <section aria-labelledby="completed-title" class="credentials-section">
+      <div class="credentials-section-head"><h2 id="completed-title">Completed</h2><span>{completed.length} credentials</span></div>
+      <div class="credentials-list">
+        {completed.map(cert => <article class="credential-row"><div class="credential-main"><span class="credential-issuer">{cert.issuer}{cert.detail ? ` · ${cert.detail}` : ""}</span><h3>{cert.title}</h3></div>{cert.href ? <a class="credential-link" href={cert.href} target="_blank" rel="noopener noreferrer">{cert.linkLabel} <span aria-hidden="true">↗</span></a> : <span class="credential-unlinked">Completed</span>}</article>)}
       </div>
-      <div>
-        <span class="intro-label">What matters most</span>
-        <p>Certifications help, but projects, labs, and execution matter more. Stay curious!</p>
+    </section>
+    <section aria-labelledby="achievements-title" class="credentials-section achievements-section">
+      <div class="credentials-section-head"><h2 id="achievements-title">Hack The Box achievements</h2><a class="credentials-profile" href={htbProfile} target="_blank" rel="noopener noreferrer">View HTB profile ↗</a></div>
+      <div class="credentials-list">
+        {achievements.map(item => <article class="credential-row"><div class="credential-main"><span class="credential-issuer">{item.platform} · {item.type}</span><h3>{item.title}</h3></div><div class="credential-achievement"><span>{item.date} · {item.status}</span><a class="credential-link" href={htbProfile} target="_blank" rel="noopener noreferrer">Profile ↗</a></div></article>)}
       </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <SectionIntro
-      title="Certifications"
-      eyebrow="Current certifications"
-      text="The roadmap below reflects what I’m building technically and where I’m heading next."
-    />
-
-    <div class="grid grid-3">
-      {certifications.map((cert) => (
-        <CertificationCard {...cert} />
-      ))}
-    </div>
-  </section>
-
-  <section class="section roadmap-section">
-    <div class="roadmap-grid">
-      <div>
-        <p class="eyebrow">Roadmap</p>
-        <h2 class="section-title">Where this is going</h2>
-        <p class="lead">
-          My certification path follows the work: networking first, then offensive depth, then stronger specialization in defense and industrial environments.
-        </p>
+    </section>
+    <section aria-labelledby="development-title" class="credentials-section development-section">
+      <div class="credentials-section-head"><h2 id="development-title">Training &amp; ongoing study</h2></div>
+      <div class="credentials-list">
+        {development.map(item => <article class="credential-row"><div class="credential-main"><span class="credential-issuer">{item.issuer}{item.extra ? ` · ${item.extra}` : ""}</span><h3>{item.title}</h3></div><span class="credential-unlinked">{item.status}</span></article>)}
       </div>
-
-      <div class="roadmap-card">
-        <ol>
-          <li><strong>CCNA</strong> — solid networking foundation</li>
-          <li><strong>OSCP</strong> — practical offensive discipline</li>
-          <li><strong>Advanced SOC / Detection Growth</strong> — deeper operational security work</li>
-          <li><strong>GIAC GRID</strong> — industrial and OT defense specialization</li>
-        </ol>
-      </div>
-    </div>
-  </section>
-
-  <style>
-    .intro-strip {
-      position: relative;
-      margin-top: -2rem;
-      z-index: 3;
-    }
-
-    .intro-strip-inner {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem;
-      padding: 1rem;
-      border-radius: 22px;
-      background: rgba(8, 14, 28, 0.62);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(14px);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.24);
-    }
-
-    .intro-label {
-      display: inline-block;
-      margin-bottom: 0.45rem;
-      color: var(--accent);
-      font-size: 0.78rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .intro-strip p {
-      margin: 0;
-      color: var(--muted);
-    }
-
-    .roadmap-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 1.5rem;
-      align-items: start;
-    }
-
-    .roadmap-card {
-      padding: 1.5rem;
-      border-radius: 24px;
-      background: linear-gradient(180deg, rgba(20, 28, 52, 0.82), rgba(11, 18, 36, 0.95));
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.24);
-    }
-
-    .roadmap-card ol {
-      margin: 0;
-      padding-left: 1.25rem;
-      color: var(--muted);
-    }
-
-    .roadmap-card li + li {
-      margin-top: 0.8rem;
-    }
-
-    @media (max-width: 900px) {
-      .intro-strip-inner,
-      .roadmap-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .intro-strip {
-        margin-top: -1rem;
-      }
-    }
-  </style>
+    </section>
+  </div>
 </BaseLayout>
+<style>
+.credentials-page{padding-top:105px;padding-bottom:130px;max-width:1050px}
+.credentials-heading{margin-bottom:80px;max-width:720px}
+.credentials-heading h1{font-size:clamp(3.3rem,7vw,6.2rem);margin:0 0 23px;letter-spacing:-.075em}
+.credentials-heading>p:last-child{color:#b8cbd5;font-size:18px;line-height:1.6}
+.credentials-section{margin-top:35px}
+.credentials-section-head{display:flex;align-items:baseline;justify-content:space-between;gap:15px;margin-bottom:16px}
+.credentials-section-head h2{font-size:23px;letter-spacing:-.045em;margin:0;font-weight:650}
+.credentials-section-head>span{font-size:12px;color:#829ba8}
+.credential-row{display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;padding:28px 0;border-bottom:1px solid #2c4350}
+.credential-row:first-child{border-top:1px solid #2c4350}
+.credential-issuer{font-size:12px;color:#8aa4b2;letter-spacing:.025em}
+.credential-main h3{font-size:clamp(19px,2vw,25px);font-weight:600;line-height:1.3;letter-spacing:-.035em;color:#eef6f9;margin:7px 0 0}
+.credential-link{color:var(--accent);font-size:13px;font-weight:650;white-space:nowrap;display:inline-flex;align-items:center;gap:14px;padding:8px 0;border-bottom:1px solid transparent;transition:border-color .2s}
+.credential-link:hover{border-bottom-color:var(--accent)}
+.credential-unlinked{font-size:12px;color:#9ab0bc;white-space:nowrap}
+.development-section{margin-top:80px}.achievements-section{margin-top:85px}.credentials-profile{color:var(--accent);font-size:13px}.credential-achievement{display:flex;align-items:center;gap:25px}.credential-achievement>span{color:#a6bcc6;font-size:12px;white-space:nowrap}
+@media(max-width:680px){.credentials-page{padding-top:65px;padding-bottom:80px}.credentials-heading{margin-bottom:55px}.credentials-heading>p:last-child{font-size:16px}.credential-row{grid-template-columns:1fr;gap:9px;padding:22px 0}.credential-link{width:fit-content}.development-section{margin-top:70px}.achievements-section{margin-top:65px}.credential-achievement{align-items:flex-start;gap:15px;flex-wrap:wrap}}
+</style>

@@ -1,0 +1,78 @@
+# COPY THIS FILE to the portfolio ROOT at .github/workflows/deploy.yml.
+# Use ONLY ONE enabled Pages deployment workflow in your portfolio repo.
+# Repository layout: Astro at root, Vite CyberLab source in academy/.
+# Requires committed package-lock.json at both the Astro root and academy/.
+name: Build & publish portfolio + CyberLab
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out combined website
+        uses: actions/checkout@v4
+      - name: Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install CyberLab (locked dependencies)
+        working-directory: academy
+        run: npm ci
+      - name: Unit, simulation and source regression checks
+        working-directory: academy
+        run: npm run verify:all
+      - name: Build CyberLab for /training/
+        working-directory: academy
+        run: npm run build
+      - name: Verify browser workflows on Chromium
+        working-directory: academy
+        run: |
+          npx playwright install --with-deps chromium
+          npm run test:browser -- --project=desktop-chromium
+          npm run test:browser -- --project=mobile-chromium
+      - name: Integrate CyberLab static build into Astro public assets
+        run: |
+          rm -rf public/training
+          mkdir -p public/training
+          cp -a academy/dist/. public/training/
+          test -f public/training/index.html
+          grep -q '/training/assets/' public/training/index.html
+      - name: Install Astro portfolio (locked dependencies)
+        run: npm ci
+      - name: Build combined Astro site
+        run: npm run build
+      - name: Verify combined output
+        run: |
+          test -f dist/index.html
+          test -f dist/training/index.html
+          grep -q '/training/assets/' dist/training/index.html
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload combined static site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Upload browser evidence if validation fails
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cyberlab-browser-evidence
+          path: |
+            academy/test-results/
+            academy/playwright-report/
+          if-no-files-found: ignore
