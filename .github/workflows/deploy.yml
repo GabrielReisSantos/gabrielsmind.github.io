@@ -15,7 +15,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  academy-quality:
+    uses: ./.github/workflows/quality.yml
+    permissions:
+      contents: read
+
   deploy:
+    needs: academy-quality
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -25,10 +31,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Include validated Academy build at /training/
+        uses: actions/download-artifact@v4
+        with:
+          name: academy-dist
+          path: public/training/
+
       - name: Install, build, and upload site
         uses: withastro/action@v4
         with:
           node-version: 22
+
+      - name: Verify combined output
+        run: |
+          test -f dist/index.html
+          test -f dist/training/index.html
+          test -d dist/training/assets
+          grep -q '/training/assets/' dist/training/index.html
 
       - name: Deploy to GitHub Pages
         id: deployment

@@ -6,6 +6,22 @@ import ProjectCard from "../components/ProjectCard.astro";
 
 const flagshipProjects = [
   {
+    title: "CyberLab — Proxmox Cyber Range",
+    text: "My segmented Proxmox homelab, with OPNsense, Cisco switching, WireGuard access, security zones and sandbox extension. Includes the full network topology and implementation notes.",
+    tags: ["Proxmox VE", "OPNsense", "Cisco SG300", "WireGuard"],
+    href: "/cyberlab/",
+    linkLabel: "Explore the homelab →",
+    label: "Infrastructure / Homelab",
+  },
+  {
+    title: "Cyber Academy",
+    text: "A separate browser-based cybersecurity learning platform with guided foundations, offensive and defensive simulations, and investigation exercises.",
+    tags: ["Security Learning", "Foundations", "Pentest", "SOC"],
+    href: "/academy/",
+    linkLabel: "Explore academy →",
+    label: "Education / In development",
+  },
+  {
     title: "Proxmox Cluster Security Lab",
     text: "A segmented multi-node security lab built to support SOC workflows, hostile-zone testing, malware research isolation, and controlled adversary simulation.",
     tags: ["Proxmox", "OPNsense", "Segmentation", "Infrastructure"],
@@ -35,7 +51,7 @@ const flagshipProjects = [
 >
   <Hero
     eyebrow="Projects · Labs · Architecture · Security Engineering"
-    title="My public projects"
+    title="Offense by curiosity. Defense by design."
     text="This section focuses on practical security projects: labs, workflows, architectures, and systems that show how I design, test, and think through technical problems."
     primaryHref="/reports/"
     primaryLabel="Read Research"
@@ -44,20 +60,6 @@ const flagshipProjects = [
     imageSrc="/images/extra-dark.jpg"
     imageAlt="Gabriel working on a laptop in an urban environment"
   />
-
-  <section class="intro-strip">
-    <div class="container intro-strip-inner">
-      <div class="intro-strip-card">
-        <span class="intro-label">What belongs here</span>
-        <p>Projects with clear objectives, design choices, and useful technical outcomes.</p>
-      </div>
-
-      <div class="intro-strip-card">
-        <span class="intro-label">What does not</span>
-        <p>Tool-driven write-ups with no real engineering logic.</p>
-      </div>
-    </div>
-  </section>
 
   <section class="section">
     <SectionIntro

@@ -1,0 +1,2 @@
+.guide-observed{display:flex;align-items:center;gap:8px;margin-top:16px;padding:10px;border:1px solid #3d6274;background:#142a3c;border-radius:8px;color:#b6cfdf;font-weight:650;font-size:13px}
+.guide-observed.done{border-color:#4ea889;background:#184037;color:#b9f8dd}

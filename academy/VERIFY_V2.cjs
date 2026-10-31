@@ -1,0 +1,10 @@
+const assert=require('node:assert/strict');const fs=require('node:fs');const path=require('node:path');const root=process.argv[2]||'.experience-verify';const routes=require(path.resolve(root,'routes.js'));let n=0;function check(condition,msg){assert.ok(condition,msg);n++;}
+const names=['foundation','ngfw','troubleshoot','studio','certification','pentest','missions','webplay','adlab','purple','correlation','world','incident','practice','investigation2','unified','passwords','secrets','missionroom','explorer','campaign'];
+for(const id of names){check(routes.isLabRoute(id),`${id} preserved`);check(routes.isAppRoute(id),`${id} route`);check(routes.routeLabel(id).length>2,`${id} label`);check(['learn','labs','investigate','certifications'].includes(routes.routeGroup(id)),`${id} group`);}
+for(const s of ['home','learn','labs','investigate','progress']){check(routes.isAppRoute(s),`hub ${s}`);check(routes.routeLabel(s).length>2,`label ${s}`);}
+for(const invalid of ['','undefined','null','admin','../purple','toString','__proto__','certifications'])check(!routes.isAppRoute(invalid),`reject ${invalid}`);
+const ids=['learn','labs','investigate','certifications'].flatMap(r=>routes.routesFor(r));check(ids.length===names.length,'all registered learning and lab routes accessible');check(new Set(ids).size===ids.length,'no duplicated module');
+// GitHub reads workflows at the repository root, including when Academy is nested.
+const qualityWorkflow=fs.existsSync('.github/workflows/quality.yml')?'.github/workflows/quality.yml':'../.github/workflows/quality.yml';
+const src=fs.readFileSync('src/experience/App.tsx','utf8');for(const id of names)check(src.includes(`page==='${id}'`),`render ${id}`);check(src.includes('Suspense'), 'lazy loading fallback');check(src.includes('storeLocation'), 'legacy bookmark updates');check(fs.readFileSync(qualityWorkflow,'utf8').includes('verify:purple-ui'),'CI verifies purple visual');
+console.log(`CyberLab v2.0 navigation checks passed: ${n} assertions.`);

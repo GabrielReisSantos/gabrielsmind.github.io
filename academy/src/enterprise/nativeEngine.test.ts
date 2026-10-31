@@ -1,0 +1,21 @@
+import {describe,it,expect} from 'vitest';
+import {editCable,editPort,editRoute,editRule} from '../threeD/topologyEngine';
+import {initialNative,forwardNative,isolateGuest,restoreNative,updateNative} from './nativeEngine';
+import {applyEnterpriseConfig,executeCommand,initialState} from '../unified/engine';
+const start=()=>initialNative();
+const withTopo=(fn:(s:ReturnType<typeof start>)=>ReturnType<typeof start>['topology'])=>{const s=start();return updateNative(s,{topology:fn(s)});};
+const withNgfw=(fn:(s:ReturnType<typeof start>)=>void)=>{const s=start();fn(s);return updateNative(start(),{firewall:s.firewall});};
+describe('v2.3 native enterprise engine',()=>{
+ it('passes on native physical + NGFW evaluation',()=>{const s=start(),v=forwardNative(s);expect(v.allowed).toBe(true);expect(v.path).toEqual(['ws01','fw','app01']);expect(v.firewall?.matchedRule).toContain('Enterprise');expect(isolateGuest(s)).toBe(true);});
+ it('stops on broken real link',()=>{const s=withTopo(s=>editCable(s.topology,'c1',false));expect(forwardNative(s).allowed).toBe(false);expect(forwardNative(s).physical.code).toBe('interface-failure');expect(forwardNative(s).firewall).toBeNull();});
+ it('stops when routed interface is shut down',()=>{const s=withTopo(s=>editPort(s.topology,'fw','eth1',{adminUp:false}));expect(forwardNative(s).allowed).toBe(false);});
+ it('stops on wrong static next-hop',()=>{const s=withTopo(s=>editRoute(s.topology,'route-reports',{via:'dc01'}));expect(forwardNative(s).stage).toBe('routing');});
+ it('stops on native topology policy deny',()=>{const s=withTopo(s=>editRule(s.topology,'native-ws-https',{action:'deny'}));expect(forwardNative(s).stage).toBe('topology-policy');});
+ it('stops on native NGFW ordered first match deny',()=>{const s=withNgfw(s=>{s.firewall.security.unshift({...s.firewall.security[1],id:'shadow',name:'Shadow deny'});});expect(forwardNative(s).stage).toBe('ngfw-policy');expect(forwardNative(s).firewall?.matchedRule).toBe('Shadow deny');});
+ it('stops on disabled native NGFW allow',()=>{const s=withNgfw(s=>{s.firewall.security[0].enabled=false;});expect(forwardNative(s).allowed).toBe(false);});
+ it('stops when NGFW DMZ route is absent',()=>{const s=withNgfw(s=>{s.firewall.dmzRoute=false;});expect(forwardNative(s).stage).toBe('routing');});
+ it('detects unsafe guest isolation if the topology guest deny is changed',()=>{const s=withTopo(s=>editRule(s.topology,'native-guest-deny',{action:'allow'}));expect(isolateGuest(s)).toBe(false);});
+ it('invalidates mission verification even when edit retains ALLOW',()=>{const initial=start(),p=forwardNative(initial);let mission=applyEnterpriseConfig(initialState(),{helpdeskReset:true,wsToApp443:p.allowed,nativeRevision:initial.revision,nativeReason:p.reason,nativeStage:p.stage});mission=executeCommand(mission,'verify attack');expect(mission.tests).not.toBeNull();const next=updateNative(initial,{firewall:structuredClone(initial.firewall)}),q=forwardNative(next);const changed=applyEnterpriseConfig(mission,{helpdeskReset:true,wsToApp443:q.allowed,nativeRevision:next.revision,nativeReason:q.reason,nativeStage:q.stage});expect(q.allowed).toBe(true);expect(changed.tests).toBeNull();});
+ it('generates no firewall observation on a link-down pre-firewall attempt',()=>{const s=withTopo(s=>editCable(s.topology,'c1',false)),v=forwardNative(s);let r=applyEnterpriseConfig(initialState(),{helpdeskReset:true,wsToApp443:v.allowed,nativeRevision:s.revision,nativeReason:v.reason,nativeStage:v.stage});r=executeCommand(r,'attack reset svc-reports');r=executeCommand(r,'attack login app01');expect(r.events.some(e=>e.family==='firewall')).toBe(false);expect(r.events.some(e=>e.eventId==='4624'&&e.kind==='attack')).toBe(false);});
+ it('rejects invalid stored state',()=>{const s=start();expect(restoreNative({...s,firewall:{...s.firewall,security:'bad'}})).toEqual(start());expect(restoreNative({...s,topology:{...s.topology,nodes:[]}})).toEqual(start());expect(restoreNative(s)).toEqual(s);});
+});

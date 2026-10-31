@@ -1,0 +1,11 @@
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),ts=require('typescript');let count=0;
+for(const file of ['src/campaign/ConnectedCampaign.tsx','src/experience/App.tsx','src/experience/Dashboard.tsx']){
+ const src=fs.readFileSync(file,'utf8'),tree=ts.createSourceFile(file,src,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);assert.equal(tree.parseDiagnostics.length,0,`${file} must parse`);count++;
+ const names=new Set();const bind=n=>{if(ts.isIdentifier(n))names.add(n.text);else if(ts.isArrayBindingPattern(n)||ts.isObjectBindingPattern(n))for(const e of n.elements)if(ts.isBindingElement(e))bind(e.name);};
+ const scan=n=>{if(ts.isImportDeclaration(n)&&n.importClause){if(n.importClause.name)names.add(n.importClause.name.text);const b=n.importClause.namedBindings;if(b){if(ts.isNamespaceImport(b))names.add(b.name.text);else for(const el of b.elements)names.add(el.name.text);}}if(ts.isVariableDeclaration(n)||ts.isParameter(n))bind(n.name);if((ts.isFunctionDeclaration(n)||ts.isClassDeclaration(n))&&n.name)names.add(n.name.text);ts.forEachChild(n,scan);};scan(tree);
+ const unresolved=[];const scanJsx=n=>{if((ts.isJsxOpeningElement(n)||ts.isJsxSelfClosingElement(n))&&ts.isIdentifier(n.tagName)&&/^[A-Z]/.test(n.tagName.text)&&!names.has(n.tagName.text))unresolved.push(n.tagName.text);ts.forEachChild(n,scanJsx);};scanJsx(tree);assert.deepEqual(unresolved,[],`${file}: missing JSX bindings`);count++;
+}
+const read=f=>fs.readFileSync(f,'utf8');
+for(const cond of [read('src/experience/routes.ts').includes('campaign:{'),read('src/experience/App.tsx').includes("page==='campaign'&&<ConnectedCampaign"),read('src/experience/Dashboard.tsx').includes("onNavigate('campaign')"),read('src/campaign/ConnectedCampaign.tsx').includes('CAMPAIGN_STORAGE'),read('src/campaign/ConnectedCampaign.tsx').includes('changeSharedEnterprise('),read('src/campaign/ConnectedCampaign.tsx').includes('patchNative('),read('src/campaign/ConnectedCampaign.tsx').includes('assessCampaign('),read('src/campaign/ConnectedCampaign.tsx').includes('exportCampaign('),read('src/campaign/campaign.css').includes('@media(max-width:510px)'),read('package.json').includes('verify:campaign')]){assert.ok(cond,'Campaign integration check');count++;}
+console.log(`PASS v3.0 UI: ${count} static route, JSX, state, and design assertions.`);

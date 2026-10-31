@@ -1,0 +1,62 @@
+name: Deploy portfolio + CyberLab to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout portfolio (Astro)
+        uses: actions/checkout@v4
+
+      - name: Checkout standalone CyberLab source
+        uses: actions/checkout@v4
+        with:
+          repository: GabrielReisSantos/cyberlab-interactive
+          ref: main
+          path: .cyberlab-src
+          persist-credentials: false
+
+      - name: Set up Node for CyberLab
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Build CyberLab for /training/
+        working-directory: .cyberlab-src
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm install --no-audit --no-fund; fi
+          npm run build
+
+      - name: Include CyberLab assets in portfolio
+        run: |
+          rm -rf public/training
+          mkdir -p public/training
+          cp -a .cyberlab-src/dist/. public/training/
+          test -f public/training/index.html
+          grep -q '/training/assets/' public/training/index.html
+
+      - name: Build and upload Astro site
+        uses: withastro/action@v4
+        with:
+          node-version: '22'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

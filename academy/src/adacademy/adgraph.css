@@ -1,0 +1,23 @@
+.adg-shell{border:1px solid #305268;border-radius:14px;background:#0f2031;overflow:hidden;margin:14px 0}
+.adg-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px;background:#142a3d;border-bottom:1px solid #38576a}
+.adg-switch,.adg-camera{display:flex;flex-wrap:wrap;align-items:center;gap:5px}
+.adg-shell button{background:#1b3547;color:#d7edf5;border:1px solid #426079;border-radius:8px;min-width:38px;min-height:38px;padding:8px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:13px}
+.adg-shell button:hover{border-color:#81b9bb}.adg-shell button.active{background:#1c554b;border-color:#83e0b7;color:#e8fff1}
+.adg-shell button:focus-visible,.adg-viewport svg:focus-visible{outline:3px solid #8be9c6;outline-offset:2px}
+.adg-viewport{position:relative;overflow:hidden;background:#091928}.adg-viewport svg{display:block;width:100%;height:auto;min-height:220px;max-height:520px;cursor:grab;touch-action:none;user-select:none}
+.adg-viewport svg:active{cursor:grabbing}.adg-footer{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:11px 14px;color:#a7c8da;font-size:12px;border-top:1px solid #27475d}
+.adg-inspector{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px;border-top:1px solid #355669;background:#183449}.adg-inspector strong{color:#aff1d3}.adg-inspector span{display:inline-block;margin-left:10px;color:#afcadd;font-size:12px}.adg-inspector p{margin:5px 0;color:#d0e2eb;font-size:13px}
+.adg-instructions{display:flex;align-items:center;gap:9px;padding:11px 14px;background:#153c43;color:#c9e9de;font-size:13px;line-height:1.6}
+.adg-disclaimer{padding:0 14px 12px!important;font-size:12px!important;color:#a1c2d2!important}
+@media(max-width:720px){.adg-toolbar{padding:8px}.adg-switch,.adg-camera{width:100%;justify-content:center}.adg-shell button{min-height:42px;min-width:40px}.adg-viewport svg{min-height:260px}}
+/* v2.5 readable discovery, filtering and selection controls */
+.adg-searchbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:12px 14px;background:#112638;border-bottom:1px solid #365569}
+.adg-searchbar label{font-size:13px;color:#b5d7e3;font-weight:700}
+.adg-searchbar input,.adg-searchbar select{min-height:40px;border-radius:8px;border:1px solid #51798b;background:#0b1928;color:#eef9ff;padding:8px 11px;font-size:14px}
+.adg-searchbar input{flex:1;min-width:170px}
+.adg-searchbar input:focus-visible,.adg-searchbar select:focus-visible{outline:3px solid #76e7c1;outline-offset:2px}
+.adg-search-results{padding:8px 12px;display:flex;gap:7px;flex-wrap:wrap;background:#142c40}
+.adg-search-results button{justify-content:space-between;gap:12px}.adg-search-results small{color:#9bbcca}
+@media(max-width:720px){.adg-searchbar{align-items:stretch}.adg-searchbar input,.adg-searchbar select{width:100%;flex-basis:100%}}
+
+.adg-disclaimer{line-height:1.65}.adg-searchbar select{min-width:150px}

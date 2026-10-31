@@ -1,290 +1,81 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Hero from "../components/Hero.astro";
-import SectionIntro from "../components/SectionIntro.astro";
 import ProjectCard from "../components/ProjectCard.astro";
+import SectionIntro from "../components/SectionIntro.astro";
+const projects=[
+ {title:"Proxmox Cluster Security Lab",text:"A segmented multi-node security lab built to support SOC workflows, hostile-zone testing, malware research isolation, and controlled adversary simulation.",tags:["Proxmox","OPNsense","Segmentation","Infrastructure"],href:"/projects/proxmox-cluster-security-lab/",linkLabel:"Read project →",label:"Infrastructure / Lab"},
+ {title:"CyberLab — Proxmox Cyber Range",text:"My segmented homelab and network-security test environment: Proxmox VE, OPNsense, Cisco SG300, WireGuard access and a sandbox extension.",tags:["Proxmox VE","OPNsense","VLANs","WireGuard"],href:"/cyberlab/",linkLabel:"Explore CyberLab →",label:"Infrastructure / Homelab"},
+ {title:"Cyber Academy",text:"A separate browser-based learning project with networking foundations, security simulations, attack paths and investigation exercises.",tags:["Training","Simulations","SOC","Pentest"],href:"/academy/",linkLabel:"Explore Cyber Academy →",label:"Interactive Learning / In development"},
+ {title:"GabrielsMind Enterprise Defense",text:"A public project focused on practical enterprise defense thinking, security architecture, and hands-on defensive workflows built to connect technical controls with real operational use.",tags:["Enterprise Defense","Security Architecture","Blue Team"],href:"https://github.com/GabrielReisSantos/gabrielsmind_enterprise_defense",linkLabel:"View repository →",label:"Security Engineering"},
+ {title:"My Home SOC Lab",text:"A home SOC lab project built to explore monitoring, detection, logging, and investigation workflows in a practical environment designed for learning by doing.",tags:["SOC Lab","Detection","Monitoring","Investigation"],href:"https://github.com/GabrielReisSantos/MyhomeSOClab",linkLabel:"View repository →",label:"Security Operations"}
+];
+const platforms=[
+ {href:"https://profile.hackthebox.com/profile/019cbeff-c958-7184-b047-f0d25cc9dec8",name:"Hack The Box",label:"Labs & Practice",icon:"HTB"},
+ {href:"https://www.linkedin.com/in/gabrielreis1712",name:"LinkedIn",label:"Professional Profile",icon:"in"},
+ {href:"https://github.com/GabrielReisSantos",name:"GitHub",label:"Code & Projects",icon:"{ }"},
+ {href:"https://medium.com/@gabrielreissantos",name:"Medium",label:"Articles & Notes",icon:"M"}
+];
 ---
-
-<BaseLayout
-  title="GabrielsMind | Cybersecurity Portfolio"
-  description="Cybersecurity portfolio, labs, research, and engineered security work by Gabriel."
->
-  <Hero
-    eyebrow="Research · Labs · Infrastructure · Experimentation"
-    title="Who am I?"
-    text="I am a junior cybersecurity analyst, focused on security operations, detection, and incident investigation.
-This portfolio documents how I think, how I investigate, and how I translate security events into operational decisions.
-Stay curious. Stay secure."
-    primaryHref="/projects/"
-    primaryLabel="See Projects"
-    secondaryHref="/reports/"
-    secondaryLabel="Read Research"
-    imageSrc="/images/about-reflection.jpg"
-    imageAlt="Gabriel in a cinematic urban environment"
-  />
-
-<section class="intro-strip">
-  <div class="container intro-strip-inner intro-links intro-links-4">
-    <a
-      class="intro-link-card"
-      href="https://profile.hackthebox.com/profile/019cbeff-c958-7184-b047-f0d25cc9dec8"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Hack The Box profile"
-    >
-      <div class="intro-icon">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M4.5 8.5L12 4l7.5 4.5v7L12 20l-7.5-4.5v-7Z" fill="none" stroke="currentColor" stroke-width="1.7" />
-          <path d="M9 10.5h6M9 13.5h6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
-        </svg>
-      </div>
-      <span class="intro-label">Labs & Practice</span>
-      <p>Hack The Box</p>
-    </a>
-
-    <a
-      class="intro-link-card"
-      href="https://www.linkedin.com/in/gabrielreis1712"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="LinkedIn profile"
-    >
-      <div class="intro-icon">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M6.94 8.5a1.56 1.56 0 1 1 0-3.12 1.56 1.56 0 0 1 0 3.12ZM5.6 9.85h2.68V18H5.6V9.85Zm4.36 0h2.57v1.11h.04c.36-.68 1.23-1.39 2.53-1.39 2.7 0 3.2 1.78 3.2 4.1V18h-2.68v-3.83c0-.91-.02-2.08-1.27-2.08-1.27 0-1.47.99-1.47 2.02V18H9.96V9.85Z" fill="currentColor"/>
-        </svg>
-      </div>
-      <span class="intro-label">Professional Profile</span>
-      <p>LinkedIn</p>
-    </a>
-
-    <a
-      class="intro-link-card"
-      href="https://github.com/GabrielReisSantos"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="GitHub profile"
-    >
-      <div class="intro-icon">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 2C6.48 2 2 6.6 2 12.27c0 4.54 2.87 8.39 6.84 9.75.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.62-3.37-1.2-3.37-1.2-.46-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .08 1.53 1.06 1.53 1.06.9 1.56 2.35 1.11 2.92.85.09-.67.35-1.11.64-1.37-2.22-.26-4.56-1.14-4.56-5.1 0-1.13.39-2.05 1.03-2.78-.1-.26-.45-1.31.1-2.73 0 0 .84-.28 2.75 1.06A9.33 9.33 0 0 1 12 6.84c.85 0 1.7.12 2.5.35 1.9-1.34 2.74-1.06 2.74-1.06.56 1.42.21 2.47.1 2.73.64.73 1.03 1.65 1.03 2.78 0 3.97-2.34 4.84-4.57 5.09.36.32.68.93.68 1.88 0 1.36-.01 2.45-.01 2.78 0 .27.18.6.69.49A10.18 10.18 0 0 0 22 12.27C22 6.6 17.52 2 12 2Z" fill="currentColor"/>
-        </svg>
-      </div>
-      <span class="intro-label">Code & Projects</span>
-      <p>GitHub</p>
-    </a>
-
-    <a
-      class="intro-link-card"
-      href="https://medium.com/@gabrielreissantos"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Medium profile"
-    >
-      <div class="intro-icon">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M4 7.5c0-.2-.02-.38-.14-.55L2.8 5.67V5.5h4.18l3.23 7.08 2.84-7.08H17v.17l-.9.86c-.08.06-.11.12-.1.23V17.2c-.01.1.02.17.1.23l.88.86v.17h-4.45v-.17l.91-.88c.09-.09.09-.11.09-.23V8.74l-3.8 9.69h-.51L4.8 8.74v7.1c-.02.16.04.32.15.43l1.19 1.45v.17H2.78v-.17l1.19-1.45a.62.62 0 0 0 .14-.43V7.5Zm14.95 9.79c0 .08 0 .15.04.2l1.01.98v.17H17v-.17l1-.97a.28.28 0 0 0 .04-.21V8.72a.28.28 0 0 0-.04-.21l-1-.97v-.17H20v.17l-1.01.98c-.04.05-.04.12-.04.2v8.57Z" fill="currentColor"/>
-        </svg>
-      </div>
-      <span class="intro-label">Articles & Notes</span>
-      <p>Medium</p>
-    </a>
+<BaseLayout title="GabrielsMind | Offense by curiosity. Defense by design." description="Gabriel Reis Santos — cybersecurity analyst, researcher and builder. Explore security operations, network engineering, CyberLab and research.">
+<section class="home-hero" aria-labelledby="home-title">
+  <div class="home-hero-photo" aria-hidden="true"><img src="/images/hacker-photoshoot-00.jpg" alt="" fetchpriority="high"/></div>
+  <div class="home-hero-overlay" aria-hidden="true"></div>
+  <div class="container home-hero-grid">
+    <div class="home-copy">
+      <p class="home-eyebrow">Gabriel Reis Santos <span aria-hidden="true">/</span> Cybersecurity</p>
+      <h1 id="home-title">Offense by<br/><span>curiosity.</span><br/>Defense by<br/><span>design.</span></h1>
+      <p class="home-strap">I pull systems apart to understand what holds them together.</p>
+      <div class="button-row"><a class="button primary" href="/projects/">Explore my work <span aria-hidden="true">↗</span></a><a class="button secondary" href="/about/">Meet Gabriel <span aria-hidden="true">↗</span></a></div>
+    </div>
+  </div>
+  <span class="hero-scroll-hint" aria-hidden="true">SCROLL TO EXPLORE <span>↓</span></span>
+</section>
+<section class="elsewhere-spot" aria-labelledby="elsewhere-title">
+  <div class="container elsewhere-layout">
+    <div class="elsewhere-copy"><p class="eyebrow">Elsewhere</p><h2 id="elsewhere-title">Follow the process.</h2><p>Technical notes, hands-on labs, collaboration and the code behind my projects.</p></div>
+    <div class="elsewhere-links">{platforms.map(item=><a class="elsewhere-link" href={item.href} target="_blank" rel="noopener noreferrer"><span class="elsewhere-icon" aria-hidden="true">{item.icon}</span><span><small>{item.label}</small><strong>{item.name}</strong></span><span class="out-arrow" aria-hidden="true">↗</span></a>)}</div>
   </div>
 </section>
-  <section class="section">
-    <SectionIntro
-      eyebrow="My public projects"
-      title="Projects that show engineering judgment"
-      text="These are the projects that best represent how I think through architecture, trust boundaries, operational tradeoffs, and technical documentation."
-    />
+<section class="section container"><div class="section-head"><div><p class="eyebrow">Selected work</p><h2 class="section-title">Not just what I know.<br/><span class="mint">What I build.</span></h2></div><p class="lead">Projects with technical depth, clear tradeoffs and reproducible reasoning—across network infrastructure, security operations and interactive learning.</p></div><div class="grid grid-3">{projects.map(project=><ProjectCard {...project}/>)}</div><div class="section-after"><a class="small-link" href="/projects/">VIEW ALL PROJECTS →</a></div></section>
+<section class="section section-academy"><div class="container academy-layout"><div><p class="eyebrow">Cyber Academy</p><h2 class="section-title">You don’t really learn a system<br/><span class="mint">until you break it.</span></h2><p class="lead">Learn concepts, make mistakes in synthetic environments, investigate their consequences and test whether your fixes actually work.</p><div class="button-row"><a href="/academy/" class="button primary">Explore Cyber Academy ↗</a><a href="/cyberlab/" class="button secondary">View my Proxmox homelab ↗</a></div><p class="microcopy" style="margin-top:23px">Browser-based simulations, not live infrastructure or active exploitation.</p></div><div class="academy-terminal" aria-label="Sample learning sequence"><div class="terminal-bar"><span><i></i><i></i><i></i></span>ACADEMY / MISSION WORKFLOW <em>DEMO</em></div><div class="terminal-content"><p><span>01</span> <b>EXPLORE</b> <small>Map assets and trust boundaries.</small></p><p><span>02</span> <b>BREAK</b> <small>Introduce a controlled fault.</small></p><p><span>03</span> <b>INVESTIGATE</b> <small>Follow packets, logs and evidence.</small></p><p><span>04</span> <b>DEFEND</b> <small>Fix the configuration.</small></p><p class="terminal-success">✓ VALIDATE: Does the fix preserve least privilege?</p></div></div></div></section>
+<section class="section container"><div class="section-head"><div><p class="eyebrow">Reports & write-ups</p><h2 class="section-title">Evidence over<br/><span class="mint">assumptions.</span></h2></div><p class="lead">Research, technical reporting, presentations and documented investigations. Built to be read, reviewed and questioned.</p></div><div class="editorial"><div class="editorial-media"><img src="/images/extra-dark.jpg" alt="Atmospheric photograph of a working environment" loading="lazy"/></div><div class="research-panel"><p class="eyebrow">Document library</p><h3>Research &amp; reports</h3><p>This section brings together reports, write-ups, threat notes and presentation material that are meant to be read as structured deliverables.</p><div class="button-row"><a class="button primary" href="/reports/">Open Reports Library ↗</a><a class="button secondary" href="https://medium.com/@gabrielreissantos" target="_blank" rel="noopener noreferrer">Visit Medium ↗</a></div><div class="subline"></div><p class="microcopy">APT34 REPORT / THREAT INTELLIGENCE / PRESENTATIONS / DOCUMENTS</p></div></div></section>
+<section class="section container"><div class="editorial about-teaser"><div><p class="eyebrow">About</p><h2 class="section-title">Curiosity is the start.<br/><span class="mint">Engineering is the answer.</span></h2><p class="lead">My background combines operations, leadership and technical work. I care about building things that are useful, explainable and operationally real—not just impressive on a slide.</p><div class="button-row"><a href="/about/" class="button primary">More about me ↗</a><a href="/contact/" class="button secondary">Get in touch ↗</a></div></div><div class="editorial-media"><img src="/images/about-reflection.jpg" alt="Gabriel in an urban setting" loading="lazy"/></div></div></section>
 
-    <div class="grid grid-3">
-<ProjectCard
-  title="Proxmox Cluster Security Lab"
-  text="A segmented multi-node security lab built to support SOC workflows, hostile-zone testing, malware research isolation, and controlled adversary simulation."
-  tags={["Proxmox", "OPNsense", "Segmentation", "Infrastructure"]}
-  href="/projects/proxmox-cluster-security-lab/"
-  linkLabel="Read project →"
-/>
-
-<ProjectCard
-  title="GabrielsMind Enterprise Defense"
-  text="A public project focused on practical enterprise defense thinking, security architecture, and hands-on defensive workflows built to connect technical controls with real operational use."
-  tags={["Enterprise Defense", "Security Architecture", "Blue Team"]}
-  href="https://github.com/GabrielReisSantos/gabrielsmind_enterprise_defense"
-  linkLabel="View repository →"
-/>
-
-<ProjectCard
-  title="My Home SOC Lab"
-  text="A home SOC lab project built to explore monitoring, detection, logging, and investigation workflows in a practical environment designed for learning by doing."
-  tags={["SOC Lab", "Detection", "Monitoring", "Investigation"]}
-  href="https://github.com/GabrielReisSantos/MyhomeSOClab"
-  linkLabel="View repository →"
-/>
-    </div>
-  </section>
-
-  <section class="section research-section">
-    <div class="research-grid">
-      <div>
-        <p class="eyebrow">Documents</p>
-        <h2 class="section-title">Research & reports</h2>
-        <p class="lead">
-          This section brings together reports, write-ups, and presentation material that are meant to be read as structured deliverables.
-        </p>
-
-        <div class="button-row">
-          <a class="button primary" href="/reports/">Open Reports Library</a>
-          <a class="button secondary" href="https://medium.com/@gabrielreissantos">Visit Blog</a>
-        </div>
-      </div>
-  <section class="section live-map">
-    <div class="container">
-      <SectionIntro
-        eyebrow="Live activity"
-        title="Global threat telemetry"
-      />
-      <div class="live-map-frame">
-        <iframe
-          src="https://cybermap.kaspersky.com/en/widget/dynamic/dark"
-          width="100%"
-          height="344"
-          frameborder="0"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          title="Cyberthreat Live Map"
-        ></iframe>
-      </div>
-    </div>
-  </section>
-  <style>
-.intro-strip {
-  position: relative;
-  margin-top: -2rem;
-  z-index: 3;
-}
-
-.intro-strip-inner {
-  display: grid;
-  gap: 0;
-  padding: 0;
-  border-radius: 22px;
-  overflow: hidden;
-  background: rgba(8, 14, 28, 0.62);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(14px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.24);
-}
-
-.intro-links-4 {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.intro-link-card {
-  padding: 1rem 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.55rem;
-  text-align: center;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
-  transition: background 0.18s ease, transform 0.18s ease;
-  min-height: 110px;
-}
-
-.intro-link-card:last-child {
-  border-right: 0;
-}
-
-.intro-link-card:hover {
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.intro-icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: var(--text);
-}
-
-.intro-icon svg {
-  width: 18px;
-  height: 18px;
-  display: block;
-}
-
-.intro-label {
-  display: inline-block;
-  margin-bottom: 0;
-  color: var(--accent);
-  font-size: 0.68rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.intro-link-card p {
-  margin: 0;
-  color: var(--text);
-  font-size: 0.98rem;
-  font-weight: 600;
-}
-.live-map {
-  padding: 5rem 0;
-}
-
-.live-map-frame {
-  margin-top: 1.5rem;
-  border-radius: 24px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(8, 14, 28, 0.72);
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.24);
-}
-
-.live-map-frame iframe {
-  display: block;
-  width: 100%;
-  min-height: 344px;
-}
-@media (max-width: 1100px) {
-  .intro-links-4 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .intro-link-card:nth-child(2) {
-    border-right: 0;
-  }
-
-  .intro-link-card:nth-child(1),
-  .intro-link-card:nth-child(2) {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  }
-}
-
-@media (max-width: 700px) {
-  .intro-links-4 {
-    grid-template-columns: 1fr;
-  }
-
-  .intro-link-card {
-    border-right: 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .intro-link-card:last-child {
-    border-bottom: 0;
-  }
-
-  .intro-strip {
-    margin-top: -1rem;
-  }
-}
-  </style>
+<section class="section container telemetry-section"><div class="section-head"><div><p class="eyebrow">Live activity</p><h2 class="section-title">Global threat telemetry</h2></div><p class="lead">Third-party live threat map for situational context. Data is supplied by Kaspersky; it is not telemetry from my personal labs.</p></div><div class="live-map-frame"><iframe src="https://cybermap.kaspersky.com/en/widget/dynamic/dark" width="100%" height="344" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Kaspersky Cyberthreat Live Map" style="border:0"></iframe></div></section>
 </BaseLayout>
+<style>
+/* The photo is part of the hero background, not a framed UI panel. */
+.home-hero{position:relative;isolation:isolate;min-height:660px;background:#09111d;overflow:hidden;display:flex;align-items:center;border-bottom:1px solid #264350}
+.home-hero-photo{position:absolute;z-index:-2;inset:0;overflow:hidden}
+.home-hero-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:61% 51%;filter:saturate(.86) contrast(1.05)}
+.home-hero-overlay{position:absolute;z-index:-1;inset:0;background:linear-gradient(90deg,#09111dfd 0%,#09111deb 25%,#09111dbf 42%,#09111d55 72%,#09111d22 100%),linear-gradient(0deg,#09111db5 0%,transparent 27%,transparent 82%,#09111d40 100%)}
+.home-hero-grid{padding-top:65px;padding-bottom:98px;min-height:660px;display:flex;align-items:center;position:relative;z-index:1}
+.home-copy{max-width:630px}
+.home-eyebrow{margin:0 0 28px;color:#dce8ea;font-size:12px;font-weight:650;letter-spacing:.08em}
+.home-eyebrow span{color:var(--accent);margin:0 7px}
+.home-copy h1{margin:0 0 28px;font-size:clamp(3.45rem,5.8vw,6.15rem);line-height:1.005;letter-spacing:-.075em;text-shadow:0 4px 24px #04101c55}
+.home-copy h1 span,.mint{color:var(--accent)}
+.home-strap{max-width:470px;font-size:clamp(1rem,1.45vw,1.2rem);line-height:1.65;color:#e2eff2;text-shadow:0 2px 8px #09111dbb}
+.home-hero .button-row{margin-top:33px}
+.home-hero .button.secondary{background:#101e2ac9;backdrop-filter:blur(10px)}
+.hero-scroll-hint{position:absolute;left:max(36px,calc((100% - var(--max-width))/2));bottom:30px;color:#d0e1e9b3;font:600 10px ui-monospace,monospace;letter-spacing:.13em}
+.hero-scroll-hint span{color:var(--accent);margin-left:12px;font-size:17px}
+@media(max-width:1100px){.home-hero-overlay{background:linear-gradient(90deg,#09111dfd 0%,#09111de0 36%,#09111d83 70%,#09111d44 100%),linear-gradient(0deg,#09111da8,transparent 36%)}.home-copy h1{font-size:clamp(3.4rem,7.4vw,5.6rem)}}
+@media(max-width:700px){.home-hero{min-height:680px;align-items:flex-end}.home-hero-photo{width:100%;height:100%}.home-hero-photo img{object-position:60% 49%;opacity:.80}.home-hero-overlay{background:linear-gradient(0deg,#09111d 2%,#09111df2 15%,#09111dba 53%,#09111d30 100%),linear-gradient(90deg,#09111d9e,transparent 85%)}.home-hero-grid{min-height:680px;padding-top:155px;padding-bottom:105px;align-items:center}.home-copy h1{font-size:clamp(3rem,10.1vw,4.2rem);letter-spacing:-.068em}.home-eyebrow{font-size:11px;margin-bottom:20px}.home-strap{font-size:15px;max-width:310px}.hero-scroll-hint{left:19px;bottom:20px;font-size:9px}}
+.section-after{border-top:1px solid var(--border);margin-top:25px;padding-top:17px;display:flex;justify-content:space-between;gap:15px}.section-after span{font:700 10px ui-monospace,monospace;color:var(--soft);letter-spacing:.06em}.section-academy{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:linear-gradient(120deg,#102636,#091826)}.academy-layout{display:grid;grid-template-columns:1fr .9fr;gap:70px;align-items:center}.academy-terminal{border:1px solid #35596a;background:#0a1b28;border-radius:7px;overflow:hidden;box-shadow:0 24px 60px #0005}.terminal-bar{border-bottom:1px solid #2a4553;padding:17px;color:#9bb6c5;font:700 10px ui-monospace,monospace;display:flex;align-items:center;justify-content:space-between}.terminal-bar span{display:flex;gap:6px}.terminal-bar i{height:7px;width:7px;background:#6b8f95;border-radius:50%}.terminal-bar i:first-child{background:var(--accent)}.terminal-bar em{color:var(--accent);font-style:normal}.terminal-content{padding:26px}.terminal-content p{display:grid;grid-template-columns:30px 118px 1fr;gap:8px;border-bottom:1px solid #213a4b;padding:14px 0;margin:0;font:700 12px ui-monospace,monospace;color:#dcefed}.terminal-content p span{color:var(--accent)}.terminal-content p small{font-size:11px;color:#8baebd;font-weight:400}.terminal-content p.terminal-success{display:block;border:0;color:var(--accent);margin-top:12px;font-size:11px}.credential-strip{border:1px solid var(--border);background:#102432;display:flex;align-items:stretch;gap:0;flex-wrap:wrap}.credential-strip span{flex:1;min-width:170px;border-right:1px solid var(--border);padding:28px 20px;text-align:center;color:#d0e5e6;font:800 11px ui-monospace,monospace;line-height:1.6}.credential-strip span:last-child{border:0}.platform-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.platform-card{border:1px solid var(--border);background:#142939;padding:25px;min-height:170px;position:relative;transition:border-color .2s,transform .2s}.platform-card:hover{border-color:var(--accent);transform:translateY(-3px)}.platform-icon{width:46px;height:46px;border:1px solid #3b7675;color:var(--accent);background:#102e32;display:grid;place-items:center;border-radius:5px;font:850 13px ui-monospace,monospace;margin-bottom:19px}.platform-label{display:block;font:700 10px ui-monospace,monospace;color:#819eaf;text-transform:uppercase}.platform-card strong{display:block;color:#d5eded;font-size:18px;margin-top:5px}.platform-arrow{position:absolute;top:18px;right:23px;color:var(--accent)}.telemetry-section{padding-bottom:80px}@media(max-width:1100px){.academy-layout{gap:30px}}@media(max-width:800px){.academy-layout{grid-template-columns:1fr}.platform-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.section-after{flex-direction:column}.terminal-content p{grid-template-columns:25px 1fr;gap:4px}.terminal-content p small{grid-column:2}.platform-grid{grid-template-columns:1fr 1fr}.platform-card{padding:15px;min-height:150px}.platform-card strong{font-size:15px}.credential-strip span{min-width:135px;padding:20px 12px}}
+</style>
+
+<style>
+.elsewhere-spot{border-bottom:1px solid var(--border);background:#0d1c2a;padding:40px 0}
+.elsewhere-layout{display:grid;grid-template-columns:minmax(210px,.7fr) 1.6fr;gap:42px;align-items:center}
+.elsewhere-copy .eyebrow{margin-bottom:10px}.elsewhere-copy h2{font-size:clamp(1.7rem,2.5vw,2.45rem);letter-spacing:-.05em;margin:0 0 8px}
+.elsewhere-copy p:last-child{font-size:13px;line-height:1.65;margin:0;max-width:320px}
+.elsewhere-links{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.elsewhere-link{min-width:0;display:flex;flex-direction:column;position:relative;padding:17px 13px 15px;border:1px solid #2c4857;border-radius:6px;background:#122636;transition:background .2s,border-color .2s}
+.elsewhere-link:hover{background:#1a3444;border-color:var(--accent)}
+.elsewhere-icon{height:32px;min-width:32px;display:inline-flex;align-items:center;color:var(--accent);font:800 15px/1 ui-monospace,monospace;letter-spacing:-.055em}
+.elsewhere-link small{display:block;color:#94adba;font-size:10px;margin:7px 0 3px;line-height:1.3}.elsewhere-link strong{display:block;font-size:13px;color:#eaf5f6;line-height:1.3}
+.out-arrow{position:absolute;right:11px;top:14px;font-size:13px;color:var(--accent)}
+@media(max-width:1020px){.elsewhere-layout{grid-template-columns:1fr;gap:20px}}
+@media(max-width:620px){.elsewhere-spot{padding:28px 0}.elsewhere-links{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>

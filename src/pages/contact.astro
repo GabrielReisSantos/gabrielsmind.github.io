@@ -1,239 +1,31 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import SectionIntro from "../components/SectionIntro.astro";
+const links = [
+  { name: "LinkedIn", note: "Professional conversations", href: "https://www.linkedin.com/in/gabrielreis1712" },
+  { name: "GitHub", note: "Source code and projects", href: "https://github.com/GabrielReisSantos" },
+  { name: "Medium", note: "Articles and notes", href: "https://medium.com/@gabrielreissantos" },
+  { name: "Schedule a call", note: "Calendly", href: "https://calendly.com/agendagabrielreis/45min" },
+];
 ---
-
-<BaseLayout
-  title="Contact | GabrielsMind"
-  description="Get in touch for project discussions, collaboration, security work, or professional opportunities."
->
-  <section class="section">
-    <div class="container contact-page">
-      <SectionIntro
-        eyebrow="Contact"
-        title="Get in touch"
-        text="For project discussions, collaboration, security work, or professional opportunities, email is the best way to reach me."
-      />
-
-      <div class="contact-grid">
-        <div class="contact-card">
-          <p class="card-label">Primary contact</p>
-          <h2>Email and scheduling</h2>
-          <p class="card-text">
-            The fastest way to reach me is by email. If you already know you want a conversation,
-            you can also book a time directly.
-          </p>
-
-          <div class="contact-list">
-            <div class="contact-item">
-              <span>Email</span>
-              <a href="mailto:contact@gabrielsmind.io">contact@gabrielsmind.io</a>
-            </div>
-
-            <div class="contact-item">
-              <span>Portfolio</span>
-              <a href="https://gabrielsmind.io" target="_blank" rel="noopener noreferrer">
-                gabrielsmind.io
-              </a>
-            </div>
-
-            <div class="contact-item">
-              <span>Best for</span>
-              <p>Project discussions, collaboration, and professional opportunities.</p>
-            </div>
-          </div>
-
-          <div class="contact-actions">
-            <a class="btn btn-primary" href="mailto:contact@gabrielsmind.io">Email me</a>
-            <a
-              class="btn btn-secondary"
-              href="https://calendly.com/agendagabrielreis/45min"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Book a call
-            </a>
-          </div>
-        </div>
-
-        <div class="contact-card">
-          <p class="card-label">Professional profiles</p>
-          <h2>Elsewhere</h2>
-          <p class="card-text">
-            These are the public places where I share work, document projects, and keep my professional profile current.
-          </p>
-
-          <div class="contact-list">
-            <div class="contact-item">
-              <span>LinkedIn</span>
-              <a
-                href="https://www.linkedin.com/in/gabrielreis1712"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                linkedin.com/in/gabrielreis1712
-              </a>
-            </div>
-
-            <div class="contact-item">
-              <span>GitHub</span>
-              <a
-                href="https://github.com/GabrielReisSantos"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                github.com/GabrielReisSantos
-              </a>
-            </div>
-
-            <div class="contact-item">
-              <span>Medium</span>
-              <a
-                href="https://medium.com/@gabrielreissantos"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                medium.com/@gabrielreissantos
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="contact-note">
-        <p class="card-label">Preferred topics</p>
-        <p>
-          I’m most interested in conversations around security engineering, SOC work, infrastructure design,
-          detection workflows, and research-driven technical projects.
-        </p>
-      </div>
+<BaseLayout title="Contact | GabrielsMind" description="Contact Gabriel Reis Santos for cybersecurity projects, research, and collaboration.">
+  <section class="container contact-minimal">
+    <p class="eyebrow">Contact</p>
+    <h1>Have something<br/><span class="mint">in mind?</span></h1>
+    <p class="contact-lead">For a project, collaboration or a conversation about security, connect with me here.</p>
+    <div class="contact-links">
+      {links.map(link => <a href={link.href} target="_blank" rel="noopener noreferrer"><span><strong>{link.name}</strong><small>{link.note}</small></span><span aria-hidden="true">↗</span></a>)}
     </div>
   </section>
 </BaseLayout>
-
 <style>
-  .contact-page {
-    padding-top: 2rem;
-    padding-bottom: 5rem;
-  }
-
-  .contact-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
-  }
-
-  .contact-card,
-  .contact-note {
-    border-radius: 24px;
-    padding: 1.75rem;
-    background: rgba(13, 20, 40, 0.72);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.2);
-  }
-
-  .contact-note {
-    margin-top: 1.5rem;
-  }
-
-  .card-label {
-    margin: 0 0 0.5rem;
-    color: var(--accent);
-    font-size: 0.78rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-
-  .contact-card h2 {
-    margin: 0 0 0.75rem;
-    font-size: 1.7rem;
-    line-height: 1.1;
-  }
-
-  .card-text {
-    margin: 0 0 1.5rem;
-    color: var(--muted);
-    max-width: 62ch;
-  }
-
-  .contact-list {
-    display: grid;
-    gap: 1rem;
-  }
-
-  .contact-item {
-    padding-top: 0.85rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .contact-item span {
-    display: block;
-    margin-bottom: 0.35rem;
-    color: var(--muted);
-    font-size: 0.9rem;
-    font-weight: 600;
-  }
-
-  .contact-item a {
-    color: var(--text);
-    text-decoration: none;
-    word-break: break-word;
-  }
-
-  .contact-item a:hover {
-    color: var(--accent);
-  }
-
-  .contact-item p {
-    margin: 0;
-    color: var(--text);
-  }
-
-  .contact-actions {
-    display: flex;
-    gap: 0.85rem;
-    flex-wrap: wrap;
-    margin-top: 1.5rem;
-  }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 50px;
-    padding: 0.85rem 1.3rem;
-    border-radius: 999px;
-    font-weight: 700;
-    text-decoration: none;
-    transition: transform 0.18s ease, opacity 0.18s ease, background 0.18s ease;
-  }
-
-  .btn:hover {
-    transform: translateY(-1px);
-  }
-
-  .btn-primary {
-    background: var(--accent);
-    color: #04111f;
-  }
-
-  .btn-secondary {
-    background: transparent;
-    color: var(--text);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-  }
-
-  .contact-note p:last-child {
-    margin: 0;
-    color: var(--text);
-    max-width: 70ch;
-  }
-
-  @media (max-width: 900px) {
-    .contact-grid {
-      grid-template-columns: 1fr;
-    }
-  }
+.contact-minimal{max-width:1000px;padding-top:115px;padding-bottom:155px}
+.contact-minimal h1{margin:0 0 28px;font-size:clamp(3.7rem,7.5vw,7.5rem);line-height:1;letter-spacing:-.075em}
+.contact-lead{font-size:18px;color:#b5cbd5;max-width:540px;line-height:1.8;margin-bottom:55px}
+.contact-links{border-top:1px solid var(--border)}
+.contact-links a{padding:25px 0;display:flex;justify-content:space-between;gap:20px;border-bottom:1px solid var(--border);align-items:center;color:var(--text)}
+.contact-links a strong{display:block;font-size:22px;font-weight:650;letter-spacing:-.04em}
+.contact-links a small{display:block;color:var(--soft);font-size:13px;margin-top:3px}
+.contact-links a>span:last-child{font-size:22px;color:var(--accent);transition:transform .2s}
+.contact-links a:hover>span:last-child{transform:translate(3px,-3px)}
+@media(max-width:700px){.contact-minimal{padding-top:70px;padding-bottom:90px}.contact-lead{font-size:16px}}
 </style>

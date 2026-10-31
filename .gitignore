@@ -1,24 +1,37 @@
-# build output
-dist/
-# generated types
-.astro/
+# =============================
+# GABRIELSMIND + CYBER ACADEMY
+# =============================
 
-# dependencies
+# Node.js dependencies
 node_modules/
 
-# logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
+# Build outputs
+dist/
+public/training/
+.astro/
 
+# Cyber Academy generated files
+academy/.*-verify/
+academy/.certqa/
+academy/test-results/
+academy/playwright-report/
 
-# environment variables
+# Test coverage
+coverage/
+
+# Environment variables and secrets
 .env
-.env.production
+.env.*
+!.env.example
 
-# macOS-specific files
+# Logs
+*.log
+npm-debug.log*
+
+# Operating system files
 .DS_Store
+Thumbs.db
 
-# jetbrains setting folder
-.idea/
+# Editor temporary files
+*.swp
+*.swo

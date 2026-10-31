@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+const topics = ["Ingress","Lab map","Policy","Wiring","Sandbox","VPS","WireGuard","API","VLANs","Storage","Threats","Scheduler","PCAP → ELK","Firewall rules"];
+---
+<BaseLayout title="CyberLab — Proxmox Cyber Range | GabrielsMind" description="Gabriel Reis Santos' Proxmox CyberLab: segmented homelab, security zones, web access, WireGuard and sandbox architecture.">
+  <section class="homelab-intro container">
+    <div class="homelab-copy">
+      <p class="eyebrow">CyberLab / Homelab & infrastructure</p>
+      <h1>Proxmox Cyber Range<span class="mint">.</span></h1>
+      <p class="homelab-sub">Network topology, access controls and sandbox extension.</p>
+      <div class="homelab-meta"><span>Proxmox VE</span><span>OPNsense</span><span>Cisco SG300</span><span>FastAPI</span><span>WireGuard</span></div>
+      <p class="homelab-description">This is my infrastructure lab: segmented networks, firewall policy, controlled test environments and the services that connect them. It is <strong>not</strong> the browser-based Cyber Academy.</p>
+      <div class="button-row"><a class="button primary" href="/cyberlab/topology.html" target="_blank" rel="noopener noreferrer">Open full topology ↗</a><a class="button secondary" href="/projects/proxmox-cluster-security-lab/">Read architecture notes ↗</a></div>
+    </div>
+    <aside class="homelab-facts" aria-label="Lab architecture"><span>ARCHITECTURE / OVERVIEW</span><div><b>Access</b><p>WireGuard · Firewall policy</p></div><div><b>Isolation</b><p>VLANs · Default-deny zones</p></div><div><b>Visibility</b><p>PCAP · Logging · Correlation</p></div><div><b>Research</b><p>Sandbox · Controlled traffic</p></div></aside>
+  </section>
+  <section class="homelab-view"><div class="container"><div class="view-heading"><div><p class="eyebrow">Interactive documentation</p><h2>Lab topology</h2></div><a href="/cyberlab/topology.html" target="_blank" rel="noopener noreferrer">View full screen ↗</a></div><div class="view-frame"><iframe src="/cyberlab/topology.html" title="Proxmox CyberLab architecture and network topology" loading="lazy"></iframe></div><p class="view-footnote">The embedded document is a visual reference to the lab architecture, not a live interface into the infrastructure.</p></div></section>
+  <section class="container homelab-topics"><div class="section-head"><div><p class="eyebrow">Documented areas</p><h2 class="section-title">Inside the lab</h2></div></div><div class="topics-grid">{topics.map((topic,index)=><div><span>{String(index+1).padStart(2,"0")}</span><strong>{topic}</strong></div>)}</div></section>
+</BaseLayout>
+<style>
+.homelab-intro{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,.65fr);align-items:center;gap:70px;padding-top:95px;padding-bottom:90px}
+.homelab-copy h1{font-size:clamp(3rem,6vw,5.8rem);letter-spacing:-.07em;max-width:800px;margin-bottom:20px}
+.homelab-sub{font-size:clamp(1.1rem,2vw,1.4rem);color:#d3e4e9}.homelab-meta{display:flex;flex-wrap:wrap;gap:9px;margin:23px 0 23px}.homelab-meta span{border:1px solid #335463;color:#9bd4d1;font:700 10px ui-monospace,monospace;padding:7px 10px;border-radius:3px}.homelab-description{max-width:630px;line-height:1.8}.homelab-description strong{color:#dcecef;font-weight:600}
+.homelab-facts{border:1px solid #2f4b59;background:#122635;padding:24px 28px}.homelab-facts>span{display:block;color:var(--accent);font:700 10px ui-monospace,monospace;letter-spacing:.11em;padding-bottom:16px}.homelab-facts>div{padding:15px 0;border-top:1px solid #2f4653}.homelab-facts b{display:block;font-size:15px}.homelab-facts p{font-size:13px;margin:4px 0 0}
+.homelab-view{background:#0d1c2a;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:65px 0}.view-heading{display:flex;justify-content:space-between;align-items:end;margin-bottom:23px;gap:20px}.view-heading h2{font-size:clamp(2rem,4vw,3.5rem);margin:0}.view-heading a{color:var(--accent);font-size:13px}.view-frame{position:relative;min-height:640px;overflow:hidden;border:1px solid #315668;border-radius:8px;background:#0a0d12}.view-frame iframe{width:100%;height:720px;border:0;display:block}.view-footnote{font-size:12px;color:#94adba;margin:14px 0 0}.homelab-topics{padding-top:80px;padding-bottom:110px}.topics-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #294757}.topics-grid>div{display:flex;align-items:center;gap:14px;padding:19px 8px;border-bottom:1px solid #294757}.topics-grid span{font:700 10px ui-monospace,monospace;color:var(--accent)}.topics-grid strong{font-size:13px;font-weight:600;color:#d8e7e9}
+@media(max-width:950px){.homelab-intro{grid-template-columns:1fr;gap:28px;padding:65px 0}.topics-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.homelab-view{padding:40px 0}.view-frame iframe{height:560px}.view-heading{align-items:start;flex-direction:column}.topics-grid{grid-template-columns:1fr 1fr}.homelab-topics{padding:60px 0}.homelab-copy h1{font-size:clamp(2.65rem,10vw,4rem)}}
+</style>

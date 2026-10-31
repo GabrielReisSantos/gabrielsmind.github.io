@@ -1,0 +1,24 @@
+import {describe,it,expect} from 'vitest';
+import {applyPacket,advanceTime,checkFault,defaultConfig,FLOWS,initialState,matchesCidr,routeLookup,troubleshootingConfig} from './packetEngine';
+import {diagnostic} from './diagnostics';
+const flow=(state=initialState(),id='outbound')=>{for(const action of ['SYN','SYN_ACK','ACK','APP_SIGNATURE'] as const){const r=applyPacket(state,id,action);if(r.verdict==='deny')return {state:r.state,result:r};state=r.state;}return {state,result:applyPacket(state,id,'DATA')};};
+describe('NGFW learning dataplane v0.3',()=>{
+ it('uses CIDR prefix correctly',()=>{expect(matchesCidr('10.20.20.2','10.20.20.0/24')).toBe(true);expect(matchesCidr('10.20.30.2','10.20.20.0/24')).toBe(false);expect(matchesCidr('8.8.8.8','0.0.0.0/0')).toBe(true);});
+ it('chooses longest route and virtual router',()=>{const c=defaultConfig();expect(routeLookup('10.20.20.10',c)?.id).toBe('dmz');c.vr='isolated';expect(routeLookup('10.20.20.10',c)).toBeUndefined();});
+ it('creates session only on an allowed SYN',()=>{const r=applyPacket(initialState(),'outbound','SYN');expect(r.verdict).toBe('allow');expect(r.state.sessions[0].state).toBe('SYN_SENT');expect(r.state.sessions[0].clientTranslated).toBe('198.51.100.5');});
+ it('rejects out-of-state traffic',()=>{expect(applyPacket(initialState(),'outbound','ACK').verdict).toBe('deny');});
+ it('requires a legal handshake order',()=>{let r=applyPacket(initialState(),'outbound','SYN');expect(applyPacket(r.state,'outbound','ACK').verdict).toBe('deny');r=applyPacket(r.state,'outbound','SYN_ACK');expect(r.state.sessions[0].state).toBe('SYN_RECEIVED');r=applyPacket(r.state,'outbound','ACK');expect(r.state.sessions[0].state).toBe('ESTABLISHED');});
+ it('tracks application change after handshake and re-evaluates policy',()=>{const r=flow();expect(r.result.verdict).toBe('allow');expect(r.state.sessions[0].app).toBe('ssl');});
+ it('resolves DNAT publication using the post-DNAT zone',()=>{const r=flow(initialState(),'inbound');expect(r.result.verdict).toBe('allow');expect(r.state.sessions[0].serverTranslated).toBe('10.20.20.10');expect(r.state.sessions[0].to).toBe('dmz');});
+ it('denies missing DNAT',()=>{expect(applyPacket(initialState(troubleshootingConfig('nat')),'inbound','SYN').reason).toMatch(/DNAT/);});
+ it('denies missing route',()=>{expect(applyPacket(initialState(troubleshootingConfig('route')),'inbound','SYN').reason).toMatch(/route/i);});
+ it('denies policy shadow at SYN',()=>{expect(applyPacket(initialState(troubleshootingConfig('shadow')),'outbound','SYN').reason).toMatch(/Broad deny/);});
+ it('denies newly identified SSL after initial SYN',()=>{let s=initialState(troubleshootingConfig('appid'));for(const a of ['SYN','SYN_ACK','ACK'] as const){const r=applyPacket(s,'outbound',a);expect(r.verdict).toBe('allow');s=r.state;}const r=applyPacket(s,'outbound','APP_SIGNATURE');expect(r.verdict).toBe('deny');expect(r.state.sessions).toHaveLength(0);});
+ it('allows synthetic signature without decryption but reports missing visibility',()=>{const s=flow().state;const r=applyPacket(s,'outbound','THREAT');expect(r.verdict).toBe('allow');expect(r.trace.some(t=>t.detail.includes('NOT blocked'))).toBe(true);});
+ it('blocks synthetic threat only with all three controls',()=>{const c=defaultConfig();c.decrypt=true;const s=flow(initialState(c)).state;const r=applyPacket(s,'outbound','THREAT');expect(r.verdict).toBe('deny');expect(r.state.sessions).toHaveLength(0);});
+ it('expires idle sessions by virtual time',()=>{const s=flow().state;expect(advanceTime(s,29).sessions).toHaveLength(1);expect(advanceTime(s,30).sessions).toHaveLength(0);});
+ it('closes on RST and disallows further ACK',()=>{const s=flow().state;const r=applyPacket(s,'outbound','RST');expect(r.state.sessions).toHaveLength(0);expect(applyPacket(r.state,'outbound','ACK').verdict).toBe('deny');});
+ it('explains policy and NAT through same engine',()=>{const s=initialState();expect(diagnostic('test nat-policy-match inbound',s)).toMatch(/10.20.20.10/);expect(diagnostic('test security-policy-match inbound ssl',s)).toMatch(/Allow published HTTPS/);});
+ it('tracks fault resolution',()=>{for(const id of ['nat','route','shadow','appid']){expect(checkFault(id,troubleshootingConfig(id))).toBe(false);expect(checkFault(id,defaultConfig())).toBe(true);}});
+ it('provides stable preset flow identities',()=>{expect(new Set(FLOWS.map(x=>x.id)).size).toBe(FLOWS.length);});
+});
